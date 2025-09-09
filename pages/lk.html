@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <header>
+        <a href="../index.html"><img src="../assets/icons/logo.svg" alt="logo" ></a>
+        <div class="container">
+            <div class="inbut">
+                <input placeholder="Найди свой товар" type="search" class="search">
+                <button><img src="../assets/icons/search.svg"></button>
+            </div>
+            <div class="botcon">
+                <a href="./catalog.html">Каталог товаров</a>
+                <a href="">Новинки</a>
+                <a href="">Популярные</a>
+                <a href="">Доставка и оплата</a>
+                <a href="">Контакты</a>
+            </div>
+        </div>
+        <div class="lk">
+            <a href="./basket.html" class="basket-icon"><img src="../assets/icons/bag.svg" alt="" id="cart-icon"></a>
+            <div id="count"></div>
+            <a href="#"><img src="../assets/icons/user.svg" alt=""></a>
+        </div>
+    </header>
+    <section>
+        <div class="containers">
+            <div class="form" id="auth-block">
+                <div class="form-login">
+                    <div class="form-wtn-p">
+                        <div class="form-wtn-btn">
+                            <div class="form-wtn-pass">
+                                <div class="hpv">
+                                    <p>Войти или создать <br>профиль</p>
+                                    <div class="butns">
+                                        <button class="tab-btn active" data-tab="login">Вход</button>
+                                        <button data-tab="register" class="tab-btn">Регистрация</button>
+                                        <div class="indicator"></div>
+                                    </div>
+                                </div>
+                                <form class="inputs" id="register-form">
+                                    <div class="inputp">
+                                        <p>Телефон или e-mail</p>
+                                        <input type="text" required id="reg-email" pattern="(^\+?[0-9\s\-()]{7,20}$)|(^[^\s@]+@[^\s@]+\.[^\s@]+$)">
+                                    </div>
+                                    <div class="inputp">
+                                        <p>Пароль</p>
+                                        <input id="password" type="password" class="password" required>
+                                    </div>
+                                    <div class="inputp extra-input">
+                                        <p>Повторите пароль</p>
+                                        <input id="repeat-password" type="password" class="password" required>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="zapomnit-pass">
+                                <label class="check1"><input type="checkbox" class="check">Запомнить меня</label>
+                                <a class="know-pass">Забыли пароль?</a>
+                            </div>
+                        </div>
+                        <button class="submit-btn" id="register-btn">Войти</button>
+                    </div>
+                    <p>Нажимая войти, вы соглашаетесь <br>с политикой конфиденциальности</p>
+                </div>
+            </div>
+            <div id="cabinet-block">
+                <div class="menu">
+                    <div class="data">
+                        <p class="name-surname"></p>
+                        <p id="phone"></p>
+                    </div>
+                    <div class="data-btn">
+                        <button id="my-data active">Мои данные</button>
+                        <button id="history">История заказов</button>
+                        <button id="address">Адрес доставки</button>
+                        <button id="logout">Выход <img></button>
+                    </div>
+                </div>
+                <div class="con" id="my-data-con">
+                    <div class="cn">
+                        <p>Мои данные</p>
+                        <div class="cnr">
+                            <div class="data-rows">
+                                <div class="field">
+                                    <label>Фамилия</label>
+                                    <span id="surname-text"></span>
+                                    <input id="surname-input" type="text">
+                                </div>
+                                <div class="field">
+                                    <label>Имя</label>
+                                    <span id="name-text"></span>
+                                    <input id="name-input" type="text">
+                                </div>
+                            </div>
+                            <div class="data-rows">
+                                <div class="field">
+                                    <label>Отчество</label>
+                                    <span id="patronymic-text"></span>
+                                    <input id="patronymic-input" type="text">
+                                </div>
+                                <div class="field">
+                                    <label>Email</label>
+                                    <span id="email"></span>
+                                    <input id="email-input" type="email">
+                                </div>
+                            </div>
+                            <div class="data-rows">
+                                <div class="field">
+                                    <label>Номер телефона</label>
+                                    <span id="phone-text"></span>
+                                    <input id="phone-input" type="tel">
+                                </div>
+                                <div class="field">
+                                    <label>Дата рождения</label>
+                                    <span id="date-text"></span>
+                                    <input id="date-input" type="date">
+                                </div>
+                            </div>
+                            <div class="btns">
+                                <button id="saveBtn">Сохранить</button>
+                                <button id="edit">Редактировать</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="top">
+            <div class="container">
+                <p class="name">Навигация</p>
+                <div class="cont">
+                    <a href="">Каталог</a>
+                    <a href="">Услуги</a>
+                    <a href="">Доставка</a>
+                    <a href="">Вопросы</a>
+                </div>
+            </div>
+            <div class="container">
+                <p class="name">Категории</p>
+                <div class="cont">
+                    <a href="">Базовые футболки</a>
+                    <a href="">Коллекции футболок</a>
+                    <a href="">Мерч под ключ</a> 
+                </div>
+            </div>
+            <div class="container">
+                <p class="name">Контакты</p>
+                <div class="cont">
+                    <div class="m">
+                        <img src="../assets/icons/mobile.svg">
+                        <a href="tel: +79189968999">+7 (918) 996-89-99</a>
+                    </div>
+                    <div class="m">
+                        <img src="../assets/icons/message-text.svg">
+                        <a href="mailto: alcraft.ru@gmail.com">alcraft.ru@gmail.com</a>
+                    </div>
+                    <div class="m">
+                        <img src="../assets/icons/tut.png">
+                        <a>г. Анапа, ул. Астраханская 84а</a>
+                    </div>
+                    <div class="icons">
+                        <a><img src="../assets/icons/wp.svg" alt="whatsapp"></a>
+                        <img src="../assets/icons/telegram.svg" alt="telegram">
+                        <img src="../assets/icons/vk.svg" alt="vkontakte">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mid"></div>
+        <div class="bot">
+            <p>ALCRAFT 2022-2025</p>
+            <div class="prava">
+                <img src="../assets/icons/c.svg">
+                <p>ИП Фомин Владислав Сергеевич</p>
+            </div>
+            <a>ИНН 230113362260</a>
+        </div>
+    </footer>
+    <script type="module" src="../js/main.js"></script>
+</body>
+</html>

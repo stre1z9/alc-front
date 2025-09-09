@@ -1,0 +1,2038 @@
+@charset "UTF-8";
+* {
+  padding: 0;
+  margin: 0;
+}
+
+@font-face {
+  font-family: "cpromed";
+  src: url(../assets/fonts/CeraPro-Medium.ttf);
+}
+@font-face {
+  font-family: "cproreg";
+  src: url(../assets/fonts/CeraPro-Regular.ttf);
+}
+@font-face {
+  font-family: "gbook";
+  src: url(../assets/fonts/Gotham-Book.ttf);
+}
+@font-face {
+  font-family: "onder";
+  src: url(../assets/fonts/ONDER-REGULAR.TTF);
+}
+@font-face {
+  font-family: "montbold";
+  src: url(../assets/fonts/Montserrat-Bold.ttf);
+}
+@font-face {
+  font-family: "cprobold";
+  src: url(../assets/fonts/CeraPro-Bold.ttf);
+}
+@keyframes shake {
+  0%, 100% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translate(-3px, 0);
+  }
+  50% {
+    transform: translate(3px, 0);
+  }
+  75% {
+    transform: translate(-2px, 0);
+  }
+}
+/* Модальное окно WB */
+.wb-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.wb-modal__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.wb-modal__content {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.wb-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.wb-modal__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.wb-modal__close {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.wb-modal__close:hover {
+  opacity: 1;
+}
+
+.wb-modal__body {
+  padding: 24px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.size-item {
+  position: relative;
+}
+
+.size-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.size-label {
+  display: block;
+  padding: 12px 8px;
+  text-align: center;
+  border: 2px solid #e8e8e8;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.2s;
+  background: white;
+}
+
+.size-input:checked + .size-label {
+  border-color: #ff4d4f;
+  color: #ff4d4f;
+  background: #fff0f0;
+}
+
+.size-input:disabled + .size-label {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.size-label:hover:not(:disabled) {
+  border-color: #ccc;
+}
+
+.wb-modal__footer {
+  padding: 16px 24px 24px;
+  border-top: 1px solid #e8e8e8;
+}
+
+/* Кнопка в стиле WB */
+.wb-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.wb-button--primary {
+  background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+  color: white;
+}
+
+.wb-button--primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff7875 0%, #ff4d4f 100%);
+  transform: translateY(-1px);
+}
+
+.wb-button:disabled {
+  background: #f5f5f5;
+  color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Анимация появления */
+@keyframes wbModalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.wb-modal__content {
+  animation: wbModalSlideIn 0.3s ease-out;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .wb-modal__content {
+    width: 95%;
+    border-radius: 12px;
+  }
+  .size-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .wb-modal__header {
+    padding: 16px 20px;
+  }
+  .wb-modal__body {
+    padding: 20px;
+  }
+  .wb-modal__footer {
+    padding: 12px 20px 20px;
+  }
+}
+body {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: #FAFAFA;
+}
+body .logo {
+  width: 120px;
+  height: 120px;
+}
+body header {
+  position: sticky;
+  padding: 50px 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #0b0b0b;
+}
+body header .container {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  width: 60%;
+}
+body header .container .inbut {
+  width: 100%;
+  display: flex;
+  border-radius: 24px;
+}
+body header .container .inbut input {
+  width: 100%;
+  padding: 12px 24px;
+  border-radius: 24px;
+  border: none;
+  background-color: #292929;
+}
+body header .container .inbut input::-moz-placeholder {
+  font-size: 16px;
+  font-family: "cpromed";
+}
+body header .container .inbut input::placeholder {
+  font-size: 16px;
+  font-family: "cpromed";
+}
+body header .container .inbut input:focus {
+  outline: none;
+}
+body header .container .inbut button {
+  height: 90%;
+  position: relative;
+  top: 1px;
+  right: 86px;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 0px 24px 24px 0px;
+  background-color: #292929;
+}
+body header .container input:hover {
+  border: 1px solid #3878FF;
+}
+body header .container .botcon {
+  width: 93%;
+  display: flex;
+  justify-content: space-between;
+}
+body header .container .botcon a {
+  font-family: "cproreg";
+  font-size: 20px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s;
+}
+body header .container .botcon a:hover {
+  color: #3878FF;
+  transform: translateY(-2px);
+  text-decoration: underline;
+}
+body header .lk {
+  width: 7%;
+  display: flex;
+  justify-content: space-between;
+}
+body header .lk #count {
+  top: 80px;
+  right: 168px;
+  position: absolute;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-family: "cpromed";
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  text-align: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: none;
+  background-color: #D81823;
+}
+body header .lk .basket-icon {
+  display: inline-block;
+  cursor: pointer;
+}
+body header .lk .basket-icon.shake {
+  animation: shake 1.5s;
+}
+body header .lk .fly-img {
+  position: fixed; /* обязательно */
+  width: 120px; /* стартовая ширина */
+  z-index: 1000;
+  transition: all 0.8s ease-in-out; /* анимация */
+  pointer-events: none;
+}
+body .banner {
+  padding: 0px 26px 0px 26px;
+  display: flex;
+  align-items: center;
+  background-color: #F2F6FF;
+}
+body .banner .zagolovok {
+  display: flex;
+  flex-direction: column;
+  gap: 90px;
+}
+body .banner .zagolovok .tech {
+  display: flex;
+  gap: 32px;
+  flex-direction: column;
+}
+body .banner .zagolovok .tech .text {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+body .banner .zagolovok .tech .text h1 {
+  font-family: "onder";
+  font-size: 48px;
+  color: #292929;
+}
+body .banner .zagolovok .tech .text p {
+  font-family: "cproreg";
+  font-size: 24px;
+}
+body .banner .zagolovok .tech .go-ctg {
+  cursor: pointer;
+  width: 50%;
+  display: flex;
+  padding: 16px 32px 16px 32px;
+  border-radius: 12px;
+  border: none;
+  justify-content: center;
+  gap: 16px;
+  align-items: center;
+  background-color: #3878FF;
+  font-family: "gbook";
+  font-size: 16px;
+  color: #F2F6FF;
+  transition: all 0.3s ease;
+}
+body .banner .zagolovok .tech .go-ctg:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+body .banner .zagolovok .go-no {
+  display: flex;
+  gap: 12px;
+}
+body .banner .zagolovok .go-no button {
+  cursor: pointer;
+  border-radius: 34px;
+  padding: 26px 30px 26px 30px;
+  border: none;
+  background-color: #CFDFF6;
+  transition: all 0.1s ease;
+}
+body .banner .zagolovok .go-no button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+body .banner .one {
+  position: relative;
+  top: 13px;
+}
+body section {
+  display: flex;
+  flex-direction: column;
+  padding: 96px 150px;
+  gap: 64px;
+}
+body section .btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+body section .btn p {
+  font-family: "cproreg";
+  font-size: 48px;
+  font-weight: 700;
+}
+body section .btn .go-new {
+  cursor: pointer;
+  padding: 16px 32px;
+  color: #FFFFFF;
+  background-color: #1C1C1C;
+  border-radius: 12px;
+  border: none;
+  font-family: "gbook";
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.1s ease;
+}
+body section .btn .go-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+body section .tcont {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 32px;
+  overflow: hidden;
+  align-items: center;
+  position: relative;
+}
+body section .tcont .go-no {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  top: 50%;
+  z-index: 10;
+  width: 70px;
+  height: 70px;
+  border-radius: 34px;
+  padding: 26px 30px 26px 30px;
+  border: none;
+  background-color: #CFDFF6;
+  transition: all 0.1s ease;
+}
+body section .tcont .go-no img {
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.3s;
+}
+body section .tcont .go-no:hover img {
+  opacity: 0.7;
+}
+body section .tcont .go-no .prev {
+  left: -40px;
+}
+body section .tcont .go-no .next {
+  right: -40px;
+}
+body section .tcont .go-no:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+body section .tcont .t-shirts-container {
+  display: flex;
+  flex-wrap: nowrap;
+  transition: transform 0.4s ease;
+  gap: 20px;
+  padding: 10px;
+}
+body section .tcont .t-shirts-container .t-shirt-card {
+  flex: 0 0 30%;
+  min-width: 0px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  width: 90%;
+  border-radius: 6px;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+body section .tcont .t-shirts-container .t-shirt-card .info {
+  position: absolute;
+  margin: 10px;
+}
+body section .tcont .t-shirts-container .t-shirt-card .info .t-shirt-collection {
+  font-family: "cproreg";
+  font-size: 14px;
+  border-radius: 6px;
+  background-color: #B3112F;
+  padding: 8px 16px;
+  color: #FFFFFF;
+}
+body section .tcont .t-shirts-container .t-shirt-card .t-shirt-image {
+  width: 100%;
+  border-radius: 6px;
+}
+body section .tcont .t-shirts-container .t-shirt-card .t-shirt-name {
+  font-family: "cpromed";
+  font-size: 24px;
+}
+body section .tcont .t-shirts-container .t-shirt-card .price {
+  text-align: right;
+  font-family: "cpromed";
+  font-size: 32px;
+}
+body section .tcont .t-shirts-container .t-shirt-card .buy {
+  cursor: pointer;
+  width: 100%;
+  padding: 16px 32px;
+  background-color: #3878FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-family: "gbook";
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+body section .tcont .t-shirts-container .t-shirt-card .buy-one-click {
+  cursor: pointer;
+  width: 100%;
+  padding: 16px 32px;
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 12px;
+  font-family: "gbook";
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  cursor: pointer;
+}
+body section .tcont .t-shirts-container .t-shirt-card .buy-one-click:active {
+  color: #FFFFFF;
+  background-color: #9e9d9d;
+}
+body section .tcont .t-shirts-container .t-shirt-card .buy:active {
+  background-color: #1f54c7;
+}
+body section .tcont .t-shirts-container .t-shirt-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+body section .tcont .loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 18px;
+  color: #666;
+}
+body section .tcont-btn {
+  display: none;
+}
+body footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: #0b0b0b;
+  gap: 60px;
+}
+body footer .top {
+  padding: 120px 200px 0px;
+  display: flex;
+  flex-direction: row;
+  gap: 160px;
+  justify-content: center;
+}
+body footer .top .container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+body footer .top .container .name {
+  font-family: "cpromed";
+  font-size: 24px;
+  color: #FFFFFF;
+  font-weight: 500;
+}
+body footer .top .container .cont {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+body footer .top .container .cont a {
+  color: #E6E6E6;
+  font-family: "cproreg";
+  font-size: 20px;
+  text-decoration: none;
+  font-weight: 400;
+}
+body footer .top .container .cont .m {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+body footer .top .container .cont .icons {
+  display: flex;
+  gap: 16px;
+}
+body footer .top .container .cont .icons img {
+  width: 36px;
+  height: 36px;
+}
+body footer .mid {
+  margin-left: 200px;
+  margin-right: 200px;
+  border: 1px solid #646464;
+}
+body footer .bot {
+  padding: 0px 200px 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 80px;
+}
+body footer .bot p {
+  font-family: "gbook";
+  font-size: 20px;
+  color: #646464;
+  font-weight: 500;
+}
+body footer .bot .prava {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+body footer .bot a {
+  font-family: "gbook";
+  font-size: 20px;
+  color: #646464;
+  font-weight: 500;
+  text-decoration: underline;
+}
+body footer menu {
+  display: none;
+}
+
+body {
+  background-color: #FFFFFF;
+}
+body section {
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+}
+body section .sortname {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+body section .sortname h1 {
+  font-family: "cproreg";
+  font-size: 48px;
+  font-weight: 800;
+}
+body section .sortname .sort-form {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+body section .sortname .sort-form__label {
+  font-family: "gbook";
+  font-size: 16px;
+  color: #090909;
+}
+body section .sortname .sort-form__select {
+  display: flex;
+  justify-content: center;
+  padding: 10px 24px;
+  padding-right: 46px;
+  border-radius: 12px;
+  font-family: "gbook";
+  font-size: 16px;
+  cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+}
+body section .sortname .sort-form__select:focus {
+  outline: none;
+  border-color: #3878FF;
+}
+body section .sortname .rotatable {
+  display: inline-block;
+  position: relative;
+  right: 54px;
+  transition: transform 0.3s ease;
+}
+body section .filters-catalog {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 92px;
+}
+body section .filters-catalog .catalog {
+  display: flex;
+  justify-content: center;
+  width: 85%;
+}
+body section .filters-catalog .catalog .tconti {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  transition: transform 0.4s ease;
+  gap: 40px;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card {
+  height: -moz-fit-content;
+  height: fit-content;
+  min-width: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  width: 90%;
+  border-radius: 32px;
+  border: 3px solid #E6E6E6;
+  gap: 12px;
+  transition: all 0.3s ease;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .info {
+  display: flex;
+  margin-right: auto;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .info .t-shirt-collection {
+  font-family: "cproreg";
+  font-size: 14px;
+  border-radius: 6px;
+  background-color: #B3112F;
+  padding: 8px 16px;
+  color: #FFFFFF;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .t-shirt-image {
+  width: 100%;
+  border-radius: 24px;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .t-shirt-name {
+  font-family: "cpromed";
+  font-size: 20px;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .price {
+  font-family: "cpromed";
+  font-size: 20px;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .buy {
+  width: 100%;
+  padding: 16px 32px;
+  background-color: #3878FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-family: "gbook";
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  cursor: pointer;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .buy-one-click {
+  width: 100%;
+  padding: 16px 32px;
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 12px;
+  font-family: "gbook";
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  cursor: pointer;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .buy-one-click:active {
+  color: #FFFFFF;
+  background-color: #9e9d9d;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .buy.added {
+  background-color: #1f54c7; /* зелёный */
+  transform: scale(1.01); /* небольшой прыжок */
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .fly-img {
+  position: fixed;
+  width: 120px;
+  z-index: 1000;
+  transition: all 0.8s ease-in-out;
+  pointer-events: none;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+body section .filters-catalog .catalog .tconti .loading {
+  text-align: center;
+  padding: 50px;
+  font-size: 18px;
+  color: #666;
+}
+body section .filters-catalog .filters {
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+body section .filters-catalog .filters p {
+  font-family: "montbold";
+  font-size: 32px;
+}
+body section .filters-catalog .filters .filter {
+  padding: 2px 0px;
+  overflow: hidden;
+  background: #fff;
+}
+body section .filters-catalog .filters .filter .filter-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+body section .filters-catalog .filters .filter .filter-header span {
+  font-family: "cproreg";
+  font-size: 24px;
+}
+body section .filters-catalog .filters .filter .filter-header .filter-arrow {
+  rotate: 180deg;
+  transition: all 0.3s ease;
+}
+body section .filters-catalog .filters .filter .filter-body {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+  gap: 20px;
+  width: 100%;
+  background-color: #FFFFFF;
+  max-height: 0;
+  overflow: hidden;
+  padding: 2px 0px;
+  opacity: 0;
+  transition: max-height 0.4s ease, padding 0.3s ease, opacity 0.3s ease;
+}
+body section .filters-catalog .filters .filter .filter-body .check1 {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-family: "cpromed";
+  font-size: 16px;
+}
+body section .filters-catalog .filters .filter .filter-body .check1 .check {
+  width: 30px;
+  height: 30px;
+  border-radius: 32px;
+}
+body section .filters-catalog .filters .filter .filter-body .pit {
+  background-color: #E6E6E6;
+  border: none;
+  border-radius: 12px;
+  font-family: "cproreg";
+  font-weight: 400;
+  font-size: 16px;
+  padding: 10px 16px;
+  margin-left: 2px;
+  width: 65%;
+}
+body section .filters-catalog .filters .filter .filter-body .pit:hover {
+  border: 2px solid #3878FF;
+}
+body section .filters-catalog .filters .filter .filter-body .pit:focus {
+  border: none;
+  outline: 2px solid #3878FF;
+}
+body section .filters-catalog .filters .filter #colors {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 20px;
+  width: 100%;
+  background-color: #FFFFFF;
+  max-height: 0;
+  overflow: hidden;
+  padding: 2px 0px;
+  opacity: 0;
+  transition: max-height 0.4s ease, padding 0.3s ease, opacity 0.3s ease;
+}
+body section .filters-catalog .filters .filter #colors .color1, body section .filters-catalog .filters .filter #colors .color2, body section .filters-catalog .filters .filter #colors .color3, body section .filters-catalog .filters .filter #colors .color4, body section .filters-catalog .filters .filter #colors .color5 {
+  width: 50px;
+  height: 50px;
+  border-radius: 36px;
+  border: none;
+}
+body section .filters-catalog .filters .filter #colors .color1 {
+  background-color: #FFFFFF;
+  border: 3px solid #3878FF;
+}
+body section .filters-catalog .filters .filter #colors .color2 {
+  background-color: #090909;
+}
+body section .filters-catalog .filters .filter #colors .color3 {
+  background-color: #686761;
+}
+body section .filters-catalog .filters .filter #colors .color4 {
+  background-color: #C6DAEC;
+}
+body section .filters-catalog .filters .filter #colors .color5 {
+  background-color: #D0C5DE;
+}
+body section .filters-catalog .filters .filter #prints {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 20px;
+  width: 100%;
+  background-color: #FFFFFF;
+  max-height: 0;
+  overflow: hidden;
+  padding: 2px 0px;
+  opacity: 0;
+  transition: max-height 0.4s ease, padding 0.3s ease, opacity 0.3s ease;
+}
+body section .filters-catalog .filters .filter #prints .print1, body section .filters-catalog .filters .filter #prints .print2, body section .filters-catalog .filters .filter #prints .print3, body section .filters-catalog .filters .filter #prints .print4, body section .filters-catalog .filters .filter #prints .print5, body section .filters-catalog .filters .filter #prints .print6, body section .filters-catalog .filters .filter #prints .print7 {
+  border-radius: 6px;
+  border: none;
+  padding: 8px 16px;
+  font-family: "cproreg";
+  font-size: 14px;
+  transition: all 0.01s ease-in;
+}
+body section .filters-catalog .filters .filter #prints .print1 {
+  background-color: #EA3BC4;
+  color: #FFFFFF;
+}
+body section .filters-catalog .filters .filter #prints .print3 {
+  background-color: #B3112F;
+  color: #FFFFFF;
+}
+body section .filters-catalog .filters .filter #prints .print4 {
+  background-color: #3B3B3B;
+  color: #FFFFFF;
+}
+body section .filters-catalog .filters .filter #prints .print5 {
+  background-color: #A259FF;
+  color: #FFFFFF;
+}
+body section .filters-catalog .filters .filter #prints .print6 {
+  background-color: #FFB71B;
+  color: #FFFFFF;
+}
+body section .filters-catalog .filters .filter #prints .print7 {
+  background-color: #FF7043;
+  color: #FFFFFF;
+}
+body section .filters-catalog .filters .filter #prints .print1:hover, body section .filters-catalog .filters .filter #prints .print2:hover, body section .filters-catalog .filters .filter #prints .print3:hover, body section .filters-catalog .filters .filter #prints .print4:hover, body section .filters-catalog .filters .filter #prints .print5:hover, body section .filters-catalog .filters .filter #prints .print6:hover, body section .filters-catalog .filters .filter #prints .print7:hover {
+  border: 3px solid #3878FF;
+}
+body section .filters-catalog .filters .filter.active .filter-arrow {
+  transform: rotate(180deg);
+}
+body section .filters-catalog .filters .btns {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+body section .filters-catalog .filters .btns .seeing {
+  border-radius: 16px;
+  padding: 24px 12px;
+  gap: 5px;
+  font-family: "gbook";
+  font-size: 16px;
+  border: none;
+  background-color: #1C1C1C;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+body section .filters-catalog .filters .btns .notsee {
+  border-radius: 16px;
+  padding: 24px 12px;
+  gap: 5px;
+  font-family: "gbook";
+  font-size: 16px;
+  border: 3px solid #3878FF;
+  background-color: #FFFFFF;
+  cursor: pointer;
+}
+
+body {
+  background-color: #fff;
+}
+body section {
+  padding: 100px;
+}
+body section .naming {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+}
+body section .naming .name {
+  font-family: "cprobold";
+  font-size: 48px;
+  color: #0b0b0b;
+}
+body section .naming p {
+  font-family: "cpromed";
+  font-size: 32px;
+  color: #646464;
+}
+body section .loading {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+body section .loading .bastext {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  align-items: center;
+}
+body section .loading .bastext .load {
+  font-family: "cprobold";
+  font-size: 40px;
+  color: #000;
+}
+body section .loading .bastext p {
+  font-family: "cproreg";
+  font-size: 32px;
+  color: #646464;
+}
+body section .loading .go-ctg {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: #3878FF;
+  color: #FFFFFF;
+  border-radius: 12px;
+  border: none;
+  font-family: "gbook";
+  font-size: 18px;
+  text-align: center;
+}
+body section .contain {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 100%;
+  justify-content: space-between;
+}
+body section .contain #basket-container {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s ease;
+  gap: 20px;
+}
+body section .contain #basket-container .t-shirt-card {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 20px 20px;
+  border-radius: 6px;
+  gap: 20px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+body section .contain #basket-container .t-shirt-card .info {
+  width: 50%;
+  display: flex;
+  margin-right: auto;
+  flex-direction: column;
+  justify-content: space-between;
+}
+body section .contain #basket-container .t-shirt-card .info .cart-info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start;
+}
+body section .contain #basket-container .t-shirt-card .info .cart-info .t-shirt-new {
+  display: none;
+}
+body section .contain #basket-container .t-shirt-card .info .cart-info .t-shirt-name {
+  font-family: "cpromed";
+  font-size: 24px;
+}
+body section .contain #basket-container .t-shirt-card .info .techinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+body section .contain #basket-container .t-shirt-card .info .techinfo .color, body section .contain #basket-container .t-shirt-card .info .techinfo .size, body section .contain #basket-container .t-shirt-card .info .techinfo .cut {
+  font-family: "cproreg";
+  font-weight: 300;
+  font-size: 16px;
+}
+body section .contain #basket-container .t-shirt-card .info .techinfo span {
+  font-weight: 600;
+}
+body section .contain #basket-container .t-shirt-card .info .t-shirt-collection {
+  width: -moz-fit-content;
+  width: fit-content;
+  font-family: "cproreg";
+  font-size: 14px;
+  border-radius: 6px;
+  background-color: #B3112F;
+  padding: 8px 16px;
+  color: #FFFFFF;
+}
+body section .contain #basket-container .t-shirt-card .t-shirt-image {
+  width: 15%;
+  height: 100%;
+}
+body section .contain #basket-container .t-shirt-card .price {
+  width: 50%;
+  display: flex;
+  align-items: flex-start;
+  gap: 92px;
+  font-family: "cpromed";
+  font-size: 24px;
+}
+body section .contain #basket-container .t-shirt-card .price .pr {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+body section .contain #basket-container .t-shirt-card .price .pr .final {
+  color: #646464;
+  font-size: 20px;
+  white-space: nowrap;
+}
+body section .contain #basket-container .t-shirt-card .price .quantity {
+  max-width: 400px;
+  position: relative;
+  width: 40%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+body section .contain #basket-container .t-shirt-card .price .quantity .increase, body section .contain #basket-container .t-shirt-card .price .quantity .decrease {
+  position: relative;
+  padding: 10px;
+  width: 52px;
+  height: 52px;
+  background-color: #E6E6E6;
+  border: none;
+  border-radius: 12px;
+  font-size: 20px;
+  text-align: center;
+}
+body section .contain #basket-container .t-shirt-card .price .quantity .qty-value {
+  text-align: center;
+  width: 30px;
+}
+body section .contain #basket-container .t-shirt-card .price .new-price {
+  max-width: 200px;
+  position: fixed;
+  width: 30%;
+}
+body section .contain #basket-container .t-shirt-card .remove {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  padding: 12px;
+  border: none;
+}
+body section .contain #basket-container .t-shirt-card .remove:active {
+  background-color: #1f54c7;
+}
+body section .contain #basket-container .t-shirt-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+body section .contain .making {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  border-radius: 6px;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 24px;
+  background-color: #FFFFFF;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+body section .contain .making p {
+  font-family: "cprobold";
+  font-size: 32px;
+}
+body section .contain .making .content {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+body section .contain .making .content .con-wth-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+body section .contain .making .content .con-wth-btn .con-wtn-full {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+body section .contain .making .content .con-wth-btn .con-wtn-full .salary-full {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+body section .contain .making .content .con-wth-btn .con-wtn-full .salary-full .dostavka {
+  display: flex;
+  justify-content: space-between;
+}
+body section .contain .making .content .con-wth-btn .con-wtn-full .salary-full .dostavka p {
+  font-family: "cpromed";
+  font-size: 24px;
+}
+body section .contain .making .content .con-wth-btn .con-wtn-full .salary-full .address {
+  font-family: "cpromed";
+  font-size: 20px;
+  color: #737373;
+}
+body section .contain .making .content .con-wth-btn .con-wtn-full .qtn-disc {
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+}
+body section .contain .making .content .con-wth-btn .con-wtn-full .qtn-disc .qtn, body section .contain .making .content .con-wth-btn .con-wtn-full .qtn-disc .disc {
+  display: flex;
+  justify-content: space-between;
+  font-family: "cpromed";
+  font-size: 20px;
+  color: #464646;
+}
+body section .contain .making .content .con-wth-btn .full {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+body section .contain .making .content .con-wth-btn .full p {
+  font-family: "cprobold";
+  font-size: 32px;
+}
+body section .contain .making .content button {
+  padding: 16px 32px;
+  font-family: "cproreg";
+  font-size: 12px;
+  background-color: #3878FF;
+  border: none;
+  border-radius: 12px;
+  color: #FFFFFF;
+  font-family: "gbook";
+  font-size: 20px;
+  transition: all 0.3s ease;
+}
+body section .contain .making .content button:hover:not(:disabled) {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+body section .contain .making .content button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+body section .contain .making .content button.processing {
+  background: #17a2b8;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+section {
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+}
+section .containers {
+  display: flex;
+  justify-content: center;
+}
+section .containers .form {
+  display: none;
+  min-width: 500px;
+  padding: 20px 30px;
+  border: 1px solid #000;
+  border-radius: 16px;
+}
+section .containers .form .form-login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+}
+section .containers .form .form-login .form-wtn-p {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .hpv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .hpv p {
+  font-family: "cpromed";
+  font-size: 36px;
+  color: #070707;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .hpv .butns {
+  position: relative;
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
+  background-color: #E6E6E6;
+  border-radius: 12px;
+  align-items: center;
+  overflow: hidden;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .hpv .butns .tab-btn {
+  font-family: "gbook";
+  font-size: 16px;
+  background-color: transparent;
+  border: none;
+  width: 60%;
+  color: #000;
+  border-radius: 12px;
+  padding: 16px 32px;
+  z-index: 2;
+  transition: color 0.3 ease;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .hpv .butns .tab-btn.active {
+  color: #FFFFFF;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .hpv .butns .indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #000;
+  border-radius: 8px;
+  z-index: 1;
+  transition: transform 0.4s ease;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .hpv .butns.register-active .indicator {
+  transform: translateX(100%);
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 28px;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .inputs .inputp {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .inputs .inputp p {
+  font-family: "cproreg";
+  font-size: 16px;
+  font-weight: 300;
+  color: #0B0B0B;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .inputs .inputp input {
+  background-color: #E6E6E6;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  width: 90%;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .inputs .extra-input {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .inputs .extra-input.show {
+  max-height: 100px;
+  opacity: 1;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .zapomnit-pass {
+  display: flex;
+  justify-content: space-between;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .zapomnit-pass label {
+  display: flex;
+  gap: 12px;
+  font-family: "cproreg";
+  font-size: 20px;
+  color: #292929;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .zapomnit-pass label input {
+  background-color: #D9D9D9;
+  width: 24px;
+  border-radius: 6px;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .zapomnit-pass .know-pass {
+  transition: all 0.3s ease;
+  opacity: 1;
+  font-family: "cpromed";
+  font-size: 20px;
+  color: #3878FF;
+}
+section .containers .form .form-login .form-wtn-p .form-wtn-btn .zapomnit-pass .know-pass.hide {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+}
+section .containers .form .form-login .form-wtn-p button {
+  padding: 16px 32px;
+  background-color: #3878FF;
+  border: none;
+  border-radius: 16px;
+  font-family: "gbook";
+  font-size: 16px;
+  color: #FFFFFF;
+}
+section .containers .form .form-login p {
+  font-family: "gbook";
+  font-size: 14px;
+  color: #464646;
+}
+section .containers #cabinet-block {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+}
+section .containers #cabinet-block .menu {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+section .containers #cabinet-block .menu .data {
+  padding: 16px 32px;
+  display: flex;
+  flex-direction: column;
+  background-color: #000;
+  border-radius: 6px 6px 0px 0px;
+  color: #FFFFFF;
+  gap: 10px;
+  font-size: 20px;
+  font-family: "cpromed";
+}
+section .containers #cabinet-block .menu .data-btn {
+  display: flex;
+  flex-direction: column;
+}
+section .containers #cabinet-block .menu .data-btn button {
+  background-color: #FFFFFF;
+  padding: 32px 32px;
+  text-align: left;
+  font-size: 20px;
+  font-family: "cpromed";
+  border: 1px solid #E6E6E6;
+}
+section .containers #cabinet-block .menu .data-btn button.active {
+  color: #3878FF;
+}
+section .containers #cabinet-block .con {
+  width: 40%;
+}
+section .containers #cabinet-block .con .cn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+section .containers #cabinet-block .con .cn p {
+  font-size: 36px;
+  font-family: "cpromed";
+  color: #070707;
+}
+section .containers #cabinet-block .con .cn .cnr {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+section .containers #cabinet-block .con .cn .cnr .data-rows {
+  width: 100%;
+  display: flex;
+  gap: 60px;
+}
+section .containers #cabinet-block .con .cn .cnr .data-rows .field {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  position: relative;
+}
+section .containers #cabinet-block .con .cn .cnr .data-rows .field label {
+  font-family: "cproreg";
+  font-size: 16px;
+  font-weight: 300;
+  color: #0B0B0B;
+}
+section .containers #cabinet-block .con .cn .cnr .data-rows .field input {
+  font-family: "cpromed";
+  font-size: 20px;
+  padding: 12px 24px;
+  background-color: #E6E6E6;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+section .containers #cabinet-block .con .cn .cnr .data-rows .field span {
+  min-height: 49px;
+  padding: 12px 24px;
+  background-color: #E6E6E6;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 100%;
+  cursor: text;
+  font-family: "cpromed";
+  font-size: 20px;
+}
+section .containers #cabinet-block .con .cn .cnr .data-rows .field .hidden {
+  display: none;
+}
+section .containers #cabinet-block .con .cn .cnr .btns {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+section .containers #cabinet-block .con .cn .cnr .btns button {
+  width: 40%;
+  padding: 16px 32px;
+  background-color: #3878FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: "gbook";
+}
+section .containers #cabinet-block .con .cn .cnr .btns #edit {
+  background-color: #FFFFFF;
+  color: #000;
+  border: 1px solid #000;
+}
+
+@media screen and (min-width: 300px) and (max-width: 768px) {
+  body {
+    width: 100%;
+  }
+  body header {
+    padding: 12px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  body header a {
+    width: 20%;
+  }
+  body header a img {
+    width: 100%;
+  }
+  body header .container {
+    display: none;
+  }
+  body header .container .inbut {
+    display: none;
+  }
+  body header .container .botcon {
+    display: none;
+  }
+  body header .lk {
+    width: 10%;
+    justify-content: space-between;
+  }
+  body header .lk #count {
+    display: none;
+  }
+  body header .lk a {
+    display: none;
+    width: 100%;
+  }
+  body header .lk a img {
+    display: none;
+    width: 100%;
+  }
+  body .banner {
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+  }
+  body .banner .zagolovok {
+    display: none;
+  }
+  body .banner img {
+    max-width: 150px;
+    width: 55%;
+  }
+  body .banner .one {
+    top: 0px;
+  }
+  body .banner .two {
+    position: relative;
+    top: 4px;
+  }
+  body section {
+    gap: 10px;
+    padding: 12px;
+  }
+  body section .btn p {
+    font-size: 24px;
+  }
+  body section .btn .go-new {
+    font-size: 12px;
+    padding: 8px;
+    white-space: nowrap;
+  }
+  body section .tcont {
+    gap: 12px;
+  }
+  body section .tcont .go-no {
+    display: none;
+  }
+  body section .tcont .t-shirts-container {
+    align-items: center;
+    transition: transform 0.4s ease;
+    gap: 10px;
+    padding: 0px;
+  }
+  body section .tcont .t-shirts-container .t-shirt-card {
+    width: -moz-fit-content;
+    width: fit-content;
+    flex: 0 0 54%;
+    padding: 12px;
+  }
+  body section .tcont .t-shirts-container .t-shirt-card .info {
+    position: absolute;
+    margin: 10px;
+  }
+  body section .tcont .t-shirts-container .t-shirt-card .info .t-shirt-collection {
+    white-space: nowrap;
+    font-size: 12px;
+  }
+  body section .tcont .t-shirts-container .t-shirt-card .t-shirt-image {
+    width: 100%;
+    border-radius: 6px;
+  }
+  body section .tcont .t-shirts-container .t-shirt-card .t-shirt-name {
+    font-size: 20px;
+  }
+  body section .tcont .t-shirts-container .t-shirt-card .price {
+    font-size: 28px;
+  }
+  body section .tcont .t-shirts-container .t-shirt-card .buy {
+    padding: 12px 24px;
+    font-size: 14px;
+    display: flex;
+  }
+  body section .tcont .t-shirts-container .t-shirt-card .buy-one-click {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+  body section .tcont .t-shirts-container .t-shirt-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  body section .tcont-btn {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+  body section .tcont-btn button {
+    width: 24px;
+  }
+  body footer {
+    gap: 0px;
+    height: -moz-fit-content;
+    height: fit-content;
+  }
+  body footer .top {
+    padding: 0px;
+  }
+  body footer .top .container {
+    display: none;
+  }
+  body footer .mid {
+    display: none;
+  }
+  body footer .bot {
+    display: none;
+  }
+  body footer menu {
+    justify-content: space-between;
+    height: -moz-fit-content;
+    height: fit-content;
+    display: flex;
+    padding: 20px;
+  }
+  body footer menu a img {
+    width: 80%;
+  }
+  body .catalogs {
+    padding: 10px;
+    flex-direction: column;
+  }
+  body .catalogs .sortname {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  body .catalogs .sortname h1 {
+    font-family: "cproreg";
+    font-size: 32px;
+    font-weight: 800;
+  }
+  body .catalogs .sortname .sort-form {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  body .catalogs .sortname .sort-form__label {
+    font-family: "gbook";
+    font-size: 12px;
+    color: #090909;
+  }
+  body .catalogs .sortname .sort-form__select {
+    display: flex;
+    justify-content: center;
+    padding: 4px 6px;
+    padding-right: 46px;
+    border-radius: 12px;
+    font-family: "gbook";
+    font-size: 14px;
+    cursor: pointer;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    border: none;
+  }
+  body .catalogs .sortname .sort-form__select:focus {
+    outline: none;
+    border-color: #3878FF;
+  }
+  body .catalogs .sortname .rotatable {
+    display: inline-block;
+    position: relative;
+    right: 54px;
+    transition: transform 0.3s ease;
+  }
+  body .catalogs .filters-catalog {
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+  }
+  body .catalogs .filters-catalog .catalog {
+    align-items: center;
+    width: 100%;
+  }
+  body .catalogs .filters-catalog .catalog .tconti {
+    width: 100%;
+    gap: 20px;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container {
+    width: -moz-fit-content;
+    width: fit-content;
+    gap: 20px;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card {
+    align-items: flex-start;
+    width: -moz-fit-content;
+    width: fit-content;
+    border-radius: 6px;
+    border: 0px solid #E6E6E6;
+    transition: none;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .info {
+    position: absolute;
+    margin: 6px;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .info .t-shirt-collection {
+    font-size: 12px;
+    border-radius: 6px;
+    padding: 4px 8px;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .t-shirt-image {
+    border-radius: 6px;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .price {
+    width: 100%;
+    text-align: end;
+    font-size: 24px;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .buy {
+    padding: 8px 16px;
+    border-radius: 6px;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .buy-one-click {
+    padding: 8px 16px;
+    border-radius: 6px;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .buy-one-click:active {
+    color: #FFFFFF;
+    background-color: #9e9d9d;
+  }
+  body .catalogs .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  body .catalogs .filters-catalog .filters {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  body .catalogs .filters-catalog .filters p {
+    font-family: "montbold";
+    font-size: 24px;
+  }
+  body .catalogs .filters-catalog .filters .filter .filter-header {
+    width: 100%;
+    font-size: 18px;
+  }
+  body .catalogs .filters-catalog .filters .filter .filter-header span {
+    font-size: 18px;
+  }
+  body .catalogs .filters-catalog .filters .filter .filter-header .filter-arrow {
+    rotate: 180deg;
+    transition: all 0.3s ease;
+  }
+  body .catalogs .filters-catalog .filters .filter .filter-body {
+    margin-top: 10px;
+    gap: 10px;
+  }
+  body .catalogs .filters-catalog .filters .filter .filter-body .check1 {
+    gap: 10px;
+    font-size: 14px;
+  }
+  body .catalogs .filters-catalog .filters .filter .filter-body .check1 .check {
+    border-radius: 6px;
+  }
+  body .catalogs .filters-catalog .filters .filter .filter-body .pit {
+    background-color: #E6E6E6;
+    border: none;
+    border-radius: 12px;
+    font-family: "cproreg";
+    font-weight: 400;
+    font-size: 16px;
+    padding: 10px 16px;
+    margin-left: 2px;
+    width: 65%;
+  }
+  body .catalogs .filters-catalog .filters .filter .filter-body .pit:hover {
+    border: 2px solid #3878FF;
+  }
+  body .catalogs .filters-catalog .filters .filter .filter-body .pit:focus {
+    border: none;
+    outline: 2px solid #3878FF;
+  }
+  body .catalogs .filters-catalog .filters .filter #colors {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 20px;
+    width: 100%;
+    background-color: #FFFFFF;
+    max-height: 0;
+    overflow: hidden;
+    padding: 2px 0px;
+    opacity: 0;
+    transition: max-height 0.4s ease, padding 0.3s ease, opacity 0.3s ease;
+  }
+  body .catalogs .filters-catalog .filters .filter #colors .color1, body .catalogs .filters-catalog .filters .filter #colors .color2, body .catalogs .filters-catalog .filters .filter #colors .color3, body .catalogs .filters-catalog .filters .filter #colors .color4, body .catalogs .filters-catalog .filters .filter #colors .color5 {
+    width: 50px;
+    height: 50px;
+    border-radius: 36px;
+    border: none;
+  }
+  body .catalogs .filters-catalog .filters .filter #colors .color1 {
+    background-color: #FFFFFF;
+    border: 3px solid #3878FF;
+  }
+  body .catalogs .filters-catalog .filters .filter #colors .color2 {
+    background-color: #090909;
+  }
+  body .catalogs .filters-catalog .filters .filter #colors .color3 {
+    background-color: #686761;
+  }
+  body .catalogs .filters-catalog .filters .filter #colors .color4 {
+    background-color: #C6DAEC;
+  }
+  body .catalogs .filters-catalog .filters .filter #colors .color5 {
+    background-color: #D0C5DE;
+  }
+  body .catalogs .filters-catalog .filters .filter #prints {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 20px;
+    width: 100%;
+    background-color: #FFFFFF;
+    max-height: 0;
+    overflow: hidden;
+    padding: 2px 0px;
+    opacity: 0;
+    transition: max-height 0.4s ease, padding 0.3s ease, opacity 0.3s ease;
+  }
+  body .catalogs .filters-catalog .filters .filter #prints .print1, body .catalogs .filters-catalog .filters .filter #prints .print2, body .catalogs .filters-catalog .filters .filter #prints .print3, body .catalogs .filters-catalog .filters .filter #prints .print4, body .catalogs .filters-catalog .filters .filter #prints .print5, body .catalogs .filters-catalog .filters .filter #prints .print6, body .catalogs .filters-catalog .filters .filter #prints .print7 {
+    border-radius: 6px;
+    border: none;
+    padding: 8px 16px;
+    font-family: "cproreg";
+    font-size: 14px;
+    transition: all 0.01s ease-in;
+  }
+  body .catalogs .filters-catalog .filters .filter #prints .print1 {
+    background-color: #EA3BC4;
+    color: #FFFFFF;
+  }
+  body .catalogs .filters-catalog .filters .filter #prints .print3 {
+    background-color: #B3112F;
+    color: #FFFFFF;
+  }
+  body .catalogs .filters-catalog .filters .filter #prints .print4 {
+    background-color: #3B3B3B;
+    color: #FFFFFF;
+  }
+  body .catalogs .filters-catalog .filters .filter #prints .print5 {
+    background-color: #A259FF;
+    color: #FFFFFF;
+  }
+  body .catalogs .filters-catalog .filters .filter #prints .print6 {
+    background-color: #FFB71B;
+    color: #FFFFFF;
+  }
+  body .catalogs .filters-catalog .filters .filter #prints .print7 {
+    background-color: #FF7043;
+    color: #FFFFFF;
+  }
+  body .catalogs .filters-catalog .filters .filter #prints .print1:hover, body .catalogs .filters-catalog .filters .filter #prints .print2:hover, body .catalogs .filters-catalog .filters .filter #prints .print3:hover, body .catalogs .filters-catalog .filters .filter #prints .print4:hover, body .catalogs .filters-catalog .filters .filter #prints .print5:hover, body .catalogs .filters-catalog .filters .filter #prints .print6:hover, body .catalogs .filters-catalog .filters .filter #prints .print7:hover {
+    border: 3px solid #3878FF;
+  }
+  body .catalogs .filters-catalog .filters .filter.active .filter-arrow {
+    transform: rotate(180deg);
+  }
+  body .catalogs .filters-catalog .filters .btns {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  body .catalogs .filters-catalog .filters .btns .seeing {
+    border-radius: 16px;
+    padding: 24px 12px;
+    gap: 5px;
+    font-family: "gbook";
+    font-size: 16px;
+    border: none;
+    background-color: #1C1C1C;
+    color: #FFFFFF;
+    cursor: pointer;
+  }
+  body .catalogs .filters-catalog .filters .btns .notsee {
+    border-radius: 16px;
+    padding: 24px 12px;
+    gap: 5px;
+    font-family: "gbook";
+    font-size: 16px;
+    border: 3px solid #3878FF;
+    background-color: #FFFFFF;
+    cursor: pointer;
+  }
+}/*# sourceMappingURL=index.css.map */

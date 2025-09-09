@@ -1,0 +1,85 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+@font-face {
+  font-family: "cpromed";
+  src: url(../assets/fonts/CeraPro-Medium.ttf);
+}
+@font-face {
+  font-family: "cproreg";
+  src: url(../assets/fonts/CeraPro-Regular.ttf);
+}
+@font-face {
+  font-family: "gbook";
+  src: url(../assets/fonts/gotham_book.otf);
+}
+@font-face {
+  font-family: "onder";
+  src: url(../assets/fonts/Onder.ttf);
+}
+body {
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+body header {
+  padding: 50px 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #0b0b0b;
+}
+body header .container {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  width: 60%;
+}
+body header .container .inbut {
+  width: 100%;
+  display: flex;
+}
+body header .container .inbut input {
+  width: 100%;
+  padding: 12px 24px;
+  border-radius: 24px;
+  border: none;
+  background-color: #292929;
+}
+body header .container .inbut input::-moz-placeholder {
+  font-size: 16px;
+  font-family: "cpromed";
+}
+body header .container .inbut input::placeholder {
+  font-size: 16px;
+  font-family: "cpromed";
+}
+body header .container .inbut input:focus {
+  outline: none;
+}
+body header .container .inbut button {
+  position: relative;
+  right: 66px;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 0px 24px 24px 0px;
+  background-color: #292929;
+}
+body header .container .botcon {
+  width: 93%;
+  display: flex;
+  justify-content: space-between;
+}
+body header .container .botcon a {
+  font-family: "cproreg";
+  font-size: 20px;
+  text-decoration: none;
+  color: #fff;
+}
+body header .lk {
+  width: 7%;
+  display: flex;
+  justify-content: space-between;
+}/*# sourceMappingURL=header.css.map */
