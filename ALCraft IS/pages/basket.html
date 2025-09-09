@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Корзина</title>
+</head>
+<body>
+    <header>
+        <a href="../index.html"><img src="../assets/icons/logo.svg" alt="logo" class="logo"></a>
+        <div class="container">
+            <div class="inbut">
+                <input placeholder="Найди свой товар">
+                <button><img src="../assets/icons/search.svg"></button>
+            </div>
+            <div class="botcon">
+                <a href="./catalog.html">Каталог товаров</a>
+                <a href="">Новинки</a>
+                <a href="">Популярные</a>
+                <a href="">Доставка и оплата</a>
+                <a href="">Контакты</a>
+            </div>
+        </div>
+        <div class="lk">
+            <a href="#" class="basket-icon"><img src="../assets/icons/bag.svg" alt="" id="cart-icon"></a>
+            <div id="count"></div>
+            <a href="./lk.html"><img src="../assets/icons/user.svg" alt=""></a>
+        </div>
+    </header>
+    <section>
+        <div id="toast-container"></div> 
+        <div class="naming">
+            <p class="name">Корзина</p>
+            <p><span id="counter">0</span> товаров</p>
+        </div>
+        <div class="loading" id="loading">
+            <img src="../assets/icons/bag-cross.svg">
+            <div class="bastext">
+                <p class="load">Корзина пока пустая</p>
+                <p>Перейдите в каталог за покупками</p>
+            </div>
+            <button class="go-ctg" id="btn-ctg">Перейти в каталог <span><img src="../assets/icons/left.svg"></span></button>
+        </div>
+        <div class="contain">
+            <div class="making">
+                <p>Оформление заказа</p>
+                <div class="content">
+                    <div class="con-wth-btn">
+                        <div class="con-wtn-full">
+                            <div class="salary-full">
+                                <div class="dostavka">
+                                    <p>Доставка в пункт выдачи</p>
+                                    <img>
+                                </div>
+                                <p class="address" id="address">Г. Тольятти, шоссе Земчихина 228</p>
+                            </div>
+                            <div class="qtn-disc">
+                                <p class="qtn">Кол-во товаров<span class="quant" id="quant">0</span></p>
+                                <p class="disc">Скидка <span class="discount"></span></p>
+                            </div>
+                        </div>
+                        <div class="full">
+                            <p>Итого</p>
+                            <p class="full-price" id="fp">1 ₽</p>
+                        </div>
+                    </div>
+                    <button class="submit-order" id="sub-order">Заказать</button>
+                </div>
+            </div>
+            <div class="t-shirts-container" id="basket-container">
+        </div>
+        </div>
+    </section>
+    <footer>
+        <div class="top">
+            <div class="container">
+                <p class="name">Навигация</p>
+                <div class="cont">
+                    <a href="">Каталог</a>
+                    <a href="">Услуги</a>
+                    <a href="">Доставка</a>
+                    <a href="">Вопросы</a>
+                </div>
+            </div>
+            <div class="container">
+                <p class="name">Категории</p>
+                <div class="cont">
+                    <a href="">Базовые футболки</a>
+                    <a href="">Коллекции футболок</a>
+                    <a href="">Мерч под ключ</a> 
+                </div>
+            </div>
+            <div class="container">
+                <p class="name">Контакты</p>
+                <div class="cont">
+                    <div class="m">
+                        <img src="../assets/icons/mobile.svg">
+                        <a href="tel: +79189968999">+7 (918) 996-89-99</a>
+                    </div>
+                    <div class="m">
+                        <img src="../assets/icons/message-text.svg">
+                        <a href="mailto: alcraft.ru@gmail.com">alcraft.ru@gmail.com</a>
+                    </div>
+                    <div class="m">
+                        <img src="../assets/icons/tut.png">
+                        <a>г. Анапа, ул. Астраханская 84а</a>
+                    </div>
+                    <div class="icons">
+                        <a><img src="../assets/icons/wp.svg" alt="whatsapp"></a>
+                        <img src="../assets/icons/telegram.svg" alt="telegram">
+                        <img src="../assets/icons/vk.svg" alt="vkontakte">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mid"></div>
+        <div class="bot">
+            <p>ALCRAFT 2022-2025</p>
+            <div class="prava">
+                <img src="../assets/icons/c.svg">
+                <p>ИП Фомин Владислав Сергеевич</p>
+            </div>
+            <a>ИНН 230113362260</a>
+        </div>
+    </footer>
+    <script type="module" src="../js/modules/cart/cart.js"></script>
+    <script type="module" src="../js/utils/orders.js"></script>
+</body>
+</html>

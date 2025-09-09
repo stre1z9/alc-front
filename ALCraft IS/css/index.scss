@@ -1,0 +1,2082 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+@font-face {
+    font-family: 'cpromed';
+    src: url(../assets/fonts/CeraPro-Medium.ttf);
+}
+@font-face {
+    font-family: 'cproreg';
+    src: url(../assets/fonts/CeraPro-Regular.ttf);
+}
+@font-face {
+    font-family: 'gbook';
+    src: url(../assets/fonts/Gotham-Book.ttf);
+}
+@font-face {
+    font-family: 'onder';
+    src: url(../assets/fonts/ONDER-REGULAR.TTF);
+}
+@font-face {
+    font-family: 'montbold';
+    src: url(../assets/fonts/Montserrat-Bold.ttf);
+}
+@font-face {
+    font-family: 'cprobold';
+    src: url(../assets/fonts/CeraPro-Bold.ttf);
+}
+@keyframes shake {
+    0%, 100% { transform: translate(0); }
+    25% { transform: translate(-3px, 0); }
+    50% { transform: translate(3px, 0); }
+    75% { transform: translate(-2px, 0); }
+}
+/* Модальное окно WB */
+.wb-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.wb-modal__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.wb-modal__content {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.wb-modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.wb-modal__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.wb-modal__close {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.wb-modal__close:hover {
+  opacity: 1;
+}
+
+.wb-modal__body {
+  padding: 24px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.size-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.size-item {
+  position: relative;
+}
+
+.size-input {
+  position: absolute;
+  opacity: 0;
+}
+
+.size-label {
+  display: block;
+  padding: 12px 8px;
+  text-align: center;
+  border: 2px solid #e8e8e8;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.2s;
+  background: white;
+}
+
+.size-input:checked + .size-label {
+  border-color: #ff4d4f;
+  color: #ff4d4f;
+  background: #fff0f0;
+}
+
+.size-input:disabled + .size-label {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.size-label:hover:not(:disabled) {
+  border-color: #ccc;
+}
+
+.wb-modal__footer {
+  padding: 16px 24px 24px;
+  border-top: 1px solid #e8e8e8;
+}
+
+/* Кнопка в стиле WB */
+.wb-button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.wb-button--primary {
+  background: linear-gradient(135deg, #ff4d4f 0%, #ff7875 100%);
+  color: white;
+}
+
+.wb-button--primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff7875 0%, #ff4d4f 100%);
+  transform: translateY(-1px);
+}
+
+.wb-button:disabled {
+  background: #f5f5f5;
+  color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Анимация появления */
+@keyframes wbModalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.wb-modal__content {
+  animation: wbModalSlideIn 0.3s ease-out;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .wb-modal__content {
+    width: 95%;
+    border-radius: 12px;
+  }
+  
+  .size-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .wb-modal__header {
+    padding: 16px 20px;
+  }
+  
+  .wb-modal__body {
+    padding: 20px;
+  }
+  
+  .wb-modal__footer {
+    padding: 12px 20px 20px;
+  }
+}
+body {
+    width: 100%;
+    height: fit-content;
+    background-color: #FAFAFA;
+    .logo {
+        width: 120px;
+        height: 120px;
+    }
+    header {
+        position: sticky;
+        padding: 50px 100px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        background-color: #0b0b0b;
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            width: 60%;
+
+            .inbut {
+                width: 100%;
+                display: flex;
+                border-radius: 24px;
+                
+                input {
+                    width: 100%;
+                    padding: 12px 24px;
+                    border-radius: 24px;
+                    border: none;
+                    background-color: #292929;
+                    
+                }
+                input::placeholder {
+                    font-size: 16px;
+                    font-family: 'cpromed';
+                }
+                input:focus {
+                    outline: none;
+                }
+                button {
+                    height: 90%;
+                    position: relative;
+                    top: 1px;
+                    right: 86px;
+                    border: none;
+                    padding: 12px 24px;
+                    border-radius: 0px 24px 24px 0px;
+                    background-color: #292929;
+                }
+            }
+            input:hover {
+                border: 1px solid #3878FF;
+            }
+            .botcon {
+                width: 93%;
+                display: flex;
+                justify-content: space-between;
+                
+                a {
+                    font-family: 'cproreg';
+                    font-size: 20px;
+                    text-decoration: none;
+                    color: #fff;
+                    transition: all 0.3s;
+                }
+                a:hover {
+                    color: #3878FF;
+                    transform: translateY(-2px);
+                    text-decoration: underline;
+                }
+            }
+        }
+        .lk {
+            width: 7%;
+            display: flex;
+            justify-content: space-between;
+            #count {
+                top: 80px;
+                right: 168px;
+                position: absolute;
+                color: #FFFFFF;
+                font-size: 14px;
+                font-family: 'cpromed';
+                justify-content: center;
+                align-items: center;
+                display: flex;
+                text-align: center;
+                width: 26px;
+                height: 26px;
+                border-radius: 999px;
+                border: none;
+                background-color: #D81823;
+            }
+            .basket-icon {
+                display: inline-block;
+                cursor: pointer;
+            }
+            .basket-icon.shake {
+                animation: shake 1.5s ; 
+            }
+            .fly-img {
+                position: fixed;          /* обязательно */
+                width: 120px;             /* стартовая ширина */
+                z-index: 1000;
+                transition: all 0.8s ease-in-out; /* анимация */
+                pointer-events: none;
+            }
+        }
+    }
+
+    .banner {
+        padding: 0px 26px 0px 26px;
+        display: flex;
+        align-items: center;
+        background-color: #F2F6FF;
+        .zagolovok {
+            display: flex;
+            flex-direction: column;
+            gap: 90px;
+            .tech {
+                display: flex;
+                gap: 32px;
+                flex-direction: column;
+                .text {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 24px;
+                    h1 {
+                        font-family: 'onder';
+                        font-size: 48px;
+                        color: #292929;
+                    }
+                    p {
+                        font-family: 'cproreg';
+                        font-size: 24px;
+                    }
+                }
+                .go-ctg {
+                    cursor: pointer;
+                    width: 50%;
+                    display: flex;
+                    padding: 16px 32px 16px 32px;
+                    border-radius: 12px;
+                    border: none;
+                    justify-content: center;
+                    gap: 16px;
+                    align-items: center;
+                    background-color: #3878FF;
+                    font-family: 'gbook';
+                    font-size: 16px;
+                    color: #F2F6FF;
+                    transition: all 0.3s ease;
+                }
+                .go-ctg:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+                }
+            }
+            .go-no {
+                
+                display: flex;
+                gap: 12px;
+                button {
+                    cursor: pointer;
+                    border-radius: 34px;
+                    padding: 26px 30px 26px 30px;
+                    border: none;
+                    background-color: #CFDFF6;
+                    transition: all 0.1s ease;
+                }
+                button:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+                }
+            }
+        }
+        .one {
+            position: relative;
+            top: 13px;
+        }
+    }
+    section {
+        display: flex;
+        flex-direction: column;
+        padding: 96px 150px;
+        gap: 64px;
+
+        .btn {
+            
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            p {
+                font-family: 'cproreg';
+                font-size: 48px;
+                font-weight: 700;
+            }
+            .go-new {
+                cursor: pointer;
+                padding: 16px 32px;
+                color: #FFFFFF;
+                background-color: #1C1C1C;
+                border-radius: 12px;
+                border: none;
+                font-family: 'gbook';
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.1s ease;
+            }
+            .go-new:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            }
+        }
+        .tcont {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 32px;
+            overflow: hidden;
+            align-items: center;
+            position: relative;
+            .go-no {
+                cursor: pointer;
+                position: relative;
+                display: flex;
+                align-items: center;
+                top: 50%;
+                z-index: 10;
+                width: 70px;
+                height: 70px;
+                border-radius: 34px;
+                padding: 26px 30px 26px 30px;
+                border: none;
+                background-color: #CFDFF6;
+                transition: all 0.1s ease;
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                    transition: opacity 0.3s;
+                }
+
+                &:hover img {
+                    opacity: 0.7;
+                }
+                .prev { left: -40px; }   
+                .next { right: -40px; }  
+            }
+            .go-no:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            }  
+            .t-shirts-container {
+                display: flex;
+                flex-wrap: nowrap;
+                transition: transform 0.4s ease;
+                gap: 20px;
+                padding: 10px;
+                .t-shirt-card {
+                    flex: 0 0 calc(90% / 3);
+                    min-width: 0px;
+                    display: flex;
+                    flex-direction: column;
+                    padding: 16px;
+                    width: 90%;
+                    border-radius: 6px;
+                    gap: 12px;
+                    transition: all 0.3s ease;
+                    .info {
+                        position: absolute;
+                        margin: 10px;
+                        .t-shirt-collection {
+                            font-family: 'cproreg';
+                            font-size: 14px;
+                            border-radius: 6px;
+                            background-color: #B3112F;
+                            padding: 8px 16px;
+                            color: #FFFFFF;
+                        }
+                    }
+                    .t-shirt-image {
+                        width: 100%;
+                        border-radius: 6px;
+                    }
+                    .t-shirt-name {
+                        font-family: 'cpromed';
+                        font-size: 24px;
+                    }
+                    .price {
+                        text-align: right;
+                        font-family: 'cpromed';
+                        font-size: 32px;
+                    }
+                    .buy {
+                        cursor: pointer;
+                        width: 100%;
+                        padding: 16px 32px;
+                        background-color: #3878FF;
+                        color: #FFFFFF;
+                        border: none;
+                        border-radius: 12px;
+                        font-family: 'gbook';
+                        font-size: 16px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 16px;
+                    }
+                    .buy-one-click {
+                        cursor: pointer;
+                        width: 100%;
+                        padding: 16px 32px;
+                        background-color: transparent;
+                        color: #000;
+                        border: 1px solid #000;
+                        border-radius: 12px;
+                        font-family: 'gbook';
+                        font-size: 16px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 16px;
+                        cursor: pointer;
+                    }
+                    .buy-one-click:active {
+                        color: #FFFFFF;
+                        background-color: #9e9d9d;
+                    }
+                    .buy:active {
+                        background-color: #1f54c7;
+                    }
+                }
+                .t-shirt-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+                }    
+                    
+            }
+            .loading {
+                text-align: center;
+                padding: 50px;
+                font-size: 18px;
+                color: #666;
+            }
+        }
+        .tcont-btn {
+            display: none;
+        }
+    }
+
+    footer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: #0b0b0b;
+        gap: 60px;
+        
+        .top {
+            padding: 120px 200px 0px;
+            display: flex;
+            flex-direction: row;
+            gap: 160px;
+            justify-content: center;
+
+            .container {
+                display: flex;
+                flex-direction: column;
+                gap: 32px;
+
+                .name {
+                    font-family: 'cpromed';
+                    font-size: 24px;
+                    color: #FFFFFF;
+                    font-weight: 500;
+                }
+                .cont {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 24px;
+                    a {
+                        color: #E6E6E6;
+                        font-family: 'cproreg';
+                        font-size: 20px;
+                        text-decoration: none;
+                        font-weight: 400;
+                    }
+                    .m {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+                    .icons {
+                        display: flex;
+                        gap: 16px;
+                        img {
+                            width: 36px;
+                            height: 36px;
+                        }
+                    }
+                }
+            }
+        }
+        .mid {
+            margin-left: 200px;
+            margin-right: 200px;
+            border: 1px solid #646464;
+        }
+        .bot {
+            padding: 0px 200px 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            gap: 80px;
+            p {
+                font-family: 'gbook';
+                font-size: 20px;
+                color: #646464;
+                font-weight: 500;
+            }
+            .prava {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 12px;
+            }
+            a {
+                font-family: 'gbook';
+                font-size: 20px;
+                color: #646464;
+                font-weight: 500;
+                text-decoration: underline;
+            }
+        }
+        menu {
+            display: none;
+        }
+    }
+}
+//catalog
+body {
+    background-color: #FFFFFF;
+    section {
+        padding: 100px;
+        display: flex;
+        flex-direction: column;
+
+        .sortname {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            h1 {
+                font-family: 'cproreg';
+                font-size: 48px;
+                font-weight: 800;
+            }
+            .sort-form {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+
+                &__label {
+                    font-family: 'gbook';
+                    font-size: 16px;
+                    color: #090909;
+                }
+
+                &__select {
+                    display: flex;
+                    justify-content: center;
+                    padding: 10px 24px;
+                    padding-right: 46px;
+                    border-radius: 12px;
+                    font-family: 'gbook';
+                    font-size: 16px;
+                    cursor: pointer;
+                    appearance: none;
+                    border: none;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #3878FF;
+                    }
+                }
+            }
+            .rotatable {
+                display: inline-block;
+                position: relative;
+                right: 54px; 
+                transition: transform 0.3s ease;
+            }
+        }
+        .filters-catalog {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 92px;
+            .catalog {
+                display: flex;
+                justify-content: center;
+                width: 85%;
+                .tconti {
+                    width: 90%;
+                    display: flex;
+                    flex-direction: row;
+                    gap: 40px;
+                    .t-shirts-container {
+                        width: 100%;
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                        transition: transform 0.4s ease;
+                        gap: 40px;
+                        .t-shirt-card {
+                            height: fit-content;
+                            min-width: 0px;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            padding: 16px;
+                            width: 90%;
+                            border-radius: 32px;
+                            border: 3px solid #E6E6E6;
+                            gap: 12px;
+                            transition: all 0.3s ease;
+                            .info {
+                                display: flex;
+                                margin-right: auto;
+                                .t-shirt-collection {
+                                    font-family: 'cproreg';
+                                    font-size: 14px;
+                                    border-radius: 6px;
+                                    background-color: #B3112F;
+                                    padding: 8px 16px;
+                                    color: #FFFFFF;
+                                }
+                            }
+                            .t-shirt-image {
+                                width: 100%;
+                                border-radius: 24px;
+                            }
+                            .t-shirt-name {
+                                font-family: 'cpromed';
+                                font-size: 20px;
+                            }
+                            .price {
+                                font-family: 'cpromed';
+                                font-size: 20px;
+                            }
+                            .buy {
+                                width: 100%;
+                                padding: 16px 32px;
+                                background-color: #3878FF;
+                                color: #FFFFFF;
+                                border: none;
+                                border-radius: 12px;
+                                font-family: 'gbook';
+                                font-size: 16px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 16px;
+                                cursor: pointer;
+                            }
+                            .buy-one-click {
+                                width: 100%;
+                                padding: 16px 32px;
+                                background-color: transparent;
+                                color: #000;
+                                border: 1px solid #000;
+                                border-radius: 12px;
+                                font-family: 'gbook';
+                                font-size: 16px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 16px;
+                                cursor: pointer;
+                            }
+                            .buy-one-click:active {
+                                color: #FFFFFF;
+                                background-color: #9e9d9d;
+                            }
+                            .buy.added {
+                                background-color: #1f54c7; /* зелёный */
+                                transform: scale(1.01);    /* небольшой прыжок */
+                            } 
+                            .fly-img {
+                                position: fixed;
+                                width: 120px;
+                                z-index: 1000;
+                                transition: all 0.8s ease-in-out;
+                                pointer-events: none;
+                            }
+                            
+                        }
+                        .t-shirt-card:hover {
+                            transform: translateY(-2px);
+                            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+                        }    
+                            
+                    }
+                    .loading {
+                        text-align: center;
+                        padding: 50px;
+                        font-size: 18px;
+                        color: #666;
+                    }
+                }
+            }
+            .filters {
+                width: 15%;
+                display: flex;
+                flex-direction: column;
+                gap: 40px;
+                p {
+                    font-family: 'montbold';
+                    font-size: 32px;
+                }
+                .filter {
+                    padding: 2px 0px;
+                    overflow: hidden;
+                    background: #fff;
+
+                    .filter-header {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        background: #FFFFFF;
+                        cursor: pointer;
+                        border: none;
+                        font-size: 16px;
+                        span {
+                            font-family: 'cproreg';
+                            font-size: 24px;
+                        }
+                        .filter-arrow {
+                            rotate: 180deg;
+                            transition: all 0.3s ease;
+                        }
+                        
+                    }
+                    .filter-body {
+                        margin-top: 20px;
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+                        gap: 20px;
+                        width: 100%;
+                        background-color: #FFFFFF;
+                        max-height: 0;
+                        overflow: hidden;
+                        padding: 2px 0px;
+                        opacity: 0;
+                        transition: 
+                        max-height 0.4s ease,
+                        padding 0.3s ease,
+                        opacity 0.3s ease;
+                        
+                        .check1 {
+                            display: flex;
+                            gap: 12px;
+                            align-items: center;
+                            font-family: 'cpromed';
+                            font-size: 16px;
+                            .check {
+                                width: 30px;
+                                height: 30px;
+                                border-radius: 32px;
+                            }
+                        }
+
+                        .pit {
+                            background-color: #E6E6E6;
+                            border: none;
+                            border-radius: 12px;
+                            font-family: 'cproreg';
+                            font-weight: 400;
+                            font-size: 16px;
+                            padding: 10px 16px;
+                            margin-left: 2px;
+                            width: 65%;
+                        }
+                        .pit:hover {
+                            border: 2px solid #3878FF;
+                        }
+                        .pit:focus {
+                            border: none;
+                            outline: 2px solid #3878FF;
+                        }
+                    }
+                    #colors {
+                        margin-top: 20px;
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+                        gap: 20px;
+                        width: 100%;
+                        background-color: #FFFFFF;
+                        max-height: 0;
+                        overflow: hidden;
+                        padding: 2px 0px;
+                        opacity: 0;
+                        transition: 
+                        max-height 0.4s ease,
+                        padding 0.3s ease,
+                        opacity 0.3s ease;
+                        .color1, .color2, .color3, .color4, .color5 {
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 36px;
+                            border: none;
+                        }
+                        .color1 {
+                            background-color: #FFFFFF;
+                            border: 3px solid #3878FF;
+                        }
+                        .color2 {
+                            background-color: #090909;
+                        }
+                        .color3 {
+                            background-color: #686761;
+                        }
+                        .color4{
+                            background-color: #C6DAEC;
+                        }
+                        .color5 {
+                            background-color: #D0C5DE;
+                        }
+                    }
+                    #prints {
+                        margin-top: 20px;
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                        gap: 20px;
+                        width: 100%;
+                        background-color: #FFFFFF;
+                        max-height: 0;
+                        overflow: hidden;
+                        padding: 2px 0px;
+                        opacity: 0;
+                        transition: 
+                            max-height 0.4s ease,
+                            padding 0.3s ease,
+                            opacity 0.3s ease;
+                        .print1, .print2, .print3, .print4, .print5, .print6, .print7 {
+                            border-radius: 6px;
+                            border: none;
+                            padding: 8px 16px;
+                            font-family: 'cproreg';
+                            font-size: 14px;
+                            transition: all 0.01s ease-in;
+                            
+                        }
+                        .print1 {
+                            background-color: #EA3BC4;
+                            color: #FFFFFF;
+                        }
+                        .print3 {
+                            background-color: #B3112F;
+                            color: #FFFFFF;
+                        }
+                        .print4 {
+                            background-color: #3B3B3B;
+                            color: #FFFFFF;
+                        }
+                        .print5 {
+                            background-color: #A259FF;
+                            color: #FFFFFF;
+                        }
+                        .print6 {
+                            background-color: #FFB71B;
+                            color: #FFFFFF;
+                        }
+                        .print7 {
+                            background-color: #FF7043;
+                            color: #FFFFFF;
+                        }
+                        .print1:hover, .print2:hover, .print3:hover, .print4:hover, .print5:hover, .print6:hover, .print7:hover {
+                            border: 3px solid #3878FF;
+                        }
+                    }
+                }
+                .filter.active .filter-arrow {
+                    transform: rotate(180deg);
+                }
+                .btns {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 16px;
+                    .seeing {
+                        border-radius: 16px;
+                        padding: 24px 12px;
+                        gap: 5px;
+                        font-family: 'gbook';
+                        font-size: 16px;
+                        border: none;
+                        background-color: #1C1C1C;
+                        color: #FFFFFF;
+                        cursor: pointer;
+                    }
+                    .notsee {
+                        border-radius: 16px;
+                        padding: 24px 12px;
+                        gap: 5px;
+                        font-family: 'gbook';
+                        font-size: 16px;
+                        border: 3px solid #3878FF;
+                        background-color: #FFFFFF;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+    }
+}
+//basket 
+body {
+    background-color: #fff;
+    section {
+        padding: 100px;
+        .naming {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 24px;
+            .name {
+                font-family: 'cprobold';
+                font-size: 48px;
+                color: #0b0b0b;
+
+            }
+            p {
+                font-family: 'cpromed';
+                font-size: 32px;
+                color: #646464;
+            }
+        }
+        .loading {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 48px;
+            .bastext {
+                display: flex;
+                flex-direction: column;
+                gap: 48px;
+                align-items: center;
+                .load {
+                    font-family: 'cprobold';
+                    font-size: 40px;
+                    color: #000;
+                }
+                p {
+                    font-family: 'cproreg';
+                    font-size: 32px;
+                    color: #646464;
+                }
+            }
+            .go-ctg {
+                display: flex;
+                gap: 16px;
+                align-items: center;
+                padding: 16px 32px;
+                background-color: #3878FF;
+                color: #FFFFFF;
+                border-radius: 12px;
+                border: none;
+                font-family: 'gbook';
+                font-size: 18px;
+                text-align: center;
+            }
+        }
+        .contain {
+            display: flex;
+            flex-direction: row-reverse;
+            width: 100%;
+            justify-content: space-between;
+            #basket-container {
+                width: 60%;
+                display: flex;
+                flex-direction: column;
+                transition: transform 0.4s ease;
+                gap: 20px;
+                .t-shirt-card {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    padding: 20px 20px;
+                    border-radius: 6px;
+                    gap: 20px;
+                    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+                    .info {
+                        width: 50%;
+                        display: flex;
+                        margin-right: auto;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        .cart-info {
+                            display: flex;
+                            flex-direction: row;
+                            gap: 20px;
+                            align-items: flex-start;
+                            .t-shirt-new {
+                                display: none;
+                            }
+                            
+                            .t-shirt-name {
+                                font-family: 'cpromed';
+                                font-size: 24px;
+                            }
+                        }
+                        .techinfo {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 12px;
+                            .color, .size, .cut {
+                                font-family: 'cproreg';
+                                font-weight: 300;
+                                font-size: 16px;
+                            }
+                            span {
+                                font-weight: 600;
+                            }
+                        }
+                        .t-shirt-collection {
+                            width: fit-content;
+                            font-family: 'cproreg';
+                            font-size: 14px;
+                            border-radius: 6px;
+                            background-color: #B3112F;
+                            padding: 8px 16px;
+                            color: #FFFFFF;
+                        }
+                    }
+                    .t-shirt-image {
+                        width: 15%;
+                        height: 100%;
+                    }
+                    
+                    .price {
+                        width: 50%;
+                        display: flex;
+                        align-items: flex-start;
+                        gap: 92px;
+                        font-family: 'cpromed';
+                        font-size: 24px;
+                        .pr {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 10px;
+                            .final {
+                                color: #646464;
+                                font-size: 20px;
+                                white-space: nowrap;
+                            }
+                        }
+                        .quantity {
+                            max-width: 400px;
+                            position: relative;
+                            width: 40%;
+                            display: flex;
+                            gap: 10px;
+                            align-items: center;
+                            .increase, .decrease {
+                                position: relative;
+                                padding: 10px;
+                                width: 52px;
+                                height: 52px;
+                                background-color: #E6E6E6;
+                                border: none;
+                                border-radius: 12px;
+                                font-size: 20px;
+                                text-align: center;
+                            }
+                            .qty-value {
+                                text-align: center;
+                                width: 30px;
+                            }
+                        }
+                        .new-price {
+                            max-width: 200px;
+                            position: fixed;
+                            width: 30%;
+                        }
+                    }
+                    
+                    .remove {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 30px;
+                        padding: 12px;
+                        border: none;
+                    }
+                    .remove:active {
+                        background-color: #1f54c7;
+                    }
+                }
+                .t-shirt-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+                }              
+            }
+            .making {
+                width: 25%;
+                display: flex;
+                flex-direction: column;
+                gap: 48px;
+                border-radius: 6px;
+                height: fit-content;
+                padding: 24px;
+                background-color: #FFFFFF;
+                box-shadow: 0 0 5px rgba(0,0,0,0.3);
+                p {
+                    font-family: 'cprobold';
+                    font-size: 32px;
+
+                }
+                .content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 64px;
+                    .con-wth-btn {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 48px;
+                        .con-wtn-full {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 64px;
+                            .salary-full {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 24px;
+                                .dostavka {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    p {
+                                        font-family: 'cpromed';
+                                        font-size: 24px;
+                                    }
+                                    img {
+
+                                    }
+                                }
+                                .address {
+                                    font-family: 'cpromed';
+                                    font-size: 20px;
+                                    color: #737373;
+                                }
+                            }
+                            .qtn-disc {
+                                display: flex;
+                                gap: 24px;
+                                flex-direction: column;
+                                .qtn, .disc {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    font-family: 'cpromed';
+                                    font-size: 20px;
+                                    color: #464646;
+                                } 
+                            }
+                        }
+                        .full {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: space-between;
+                            p {
+                                font-family: 'cprobold';
+                                font-size: 32px;
+                            }
+                        }
+                    }
+                    button {
+                        padding: 16px 32px;
+                        font-family: 'cproreg';
+                        font-size: 12px;
+                        background-color: #3878FF;
+                        border: none;
+                        border-radius: 12px;
+                        color: #FFFFFF;
+                        font-family: 'gbook';
+                        font-size: 20px;
+                        transition: all 0.3s ease;
+                    }
+                    button:hover:not(:disabled) {
+                        background: #0056b3;
+                        transform: translateY(-2px);
+                    }
+                    button:disabled {
+                        background: #6c757d;
+                        cursor: not-allowed;
+                        opacity: 0.6;
+                    }
+                    button.processing {
+                        background: #17a2b8;
+                        animation: pulse 1.5s infinite;
+                    }
+                    @keyframes pulse {
+                        0% { opacity: 1; }
+                        50% { opacity: 0.7; }
+                        100% { opacity: 1; }
+                    }
+                }
+            }
+        }
+    }
+}
+//lk
+section {
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    .containers {
+        display: flex;
+        justify-content: center;
+        .form {
+            display: none;
+            min-width: 500px;
+            padding: 20px 30px;
+            border: 1px solid #000;
+            border-radius: 16px;
+            .form-login {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 28px;
+                align-items: center;
+                .form-wtn-p {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 40px;
+                    .form-wtn-btn {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        .form-wtn-pass {
+                            width: 100%;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 32px;
+                            .hpv {
+                                width: 100%;
+                                display: flex;
+                                flex-direction: column;
+                                gap: 32px;
+                                p {
+                                    font-family: 'cpromed';
+                                    font-size: 36px;
+                                    color: #070707;
+                                }
+                                .butns {
+                                    position: relative;
+                                    width: 100%;
+                                    display: inline-flex;
+                                    justify-content: space-between;
+                                    background-color: #E6E6E6;
+                                    border-radius: 12px;
+                                    align-items: center;
+                                    overflow: hidden;
+                                    .tab-btn {
+                                        font-family: 'gbook';
+                                        font-size: 16px;
+                                        background-color: transparent;
+                                        border: none;
+                                        width: 60%;
+                                        color: #000;
+                                        border-radius: 12px;
+                                        padding: 16px 32px;
+                                        z-index: 2;
+                                        transition: color 0.3 ease;
+                                        &.active {
+                                            color: #FFFFFF;
+                                            
+                                        }
+                                    }
+                                    .indicator {
+                                        position: absolute;
+                                        top: 0;
+                                        left: 0;
+                                        width: 50%; 
+                                        height: 100%;
+                                        background-color: #000;
+                                        border-radius: 8px;
+                                        z-index: 1;
+                                        transition: transform 0.4s ease;
+                                    }
+                                    &.register-active .indicator {
+                                        transform: translateX(100%);
+                                    }
+                                }
+                            }
+                            .inputs {
+                                display: flex;
+                                flex-direction: column;
+                                width: 100%;
+                                gap: 28px;
+                                .inputp {
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 8px;
+                                    width: 100%;
+                                    p {
+                                        font-family: 'cproreg';
+                                        font-size: 16px;
+                                        font-weight: 300;
+                                        color: #0B0B0B;
+                                    }
+                                    input {
+                                        background-color: #E6E6E6;
+                                        border: none;
+                                        border-radius: 8px;
+                                        padding: 12px 24px;
+                                        width: 90%;
+                                    }
+                                    
+                                }
+                                .extra-input {
+                                    max-height: 0;
+                                    opacity: 0;
+                                    overflow: hidden;
+                                    transition: all 0.3s ease;
+                                }
+
+                                .extra-input.show {
+                                    max-height: 100px;
+                                    opacity: 1;
+                                }
+                            }
+                        }
+                        .zapomnit-pass {
+                            display: flex;
+                            justify-content: space-between;
+                            label {
+                                display: flex;
+                                gap: 12px;
+                                font-family: 'cproreg';
+                                font-size: 20px;
+                                color: #292929;
+                                input {
+                                    background-color: #D9D9D9;
+                                    width: 24px;
+                                    border-radius: 6px;
+                                }
+                            }
+                            .know-pass {
+                                transition: all 0.3s ease;
+                                opacity: 1;
+                                font-family: 'cpromed';
+                                font-size: 20px;
+                                color: #3878FF;
+                            }
+                            .know-pass.hide {
+                                opacity: 0;
+                                max-height: 0;
+                                overflow: hidden;
+                            }
+                        }
+                    }
+                    button {
+                        padding: 16px 32px;
+                        background-color: #3878FF;
+                        border: none;
+                        border-radius: 16px;
+                        font-family: 'gbook';
+                        font-size: 16px;
+                        color: #FFFFFF;
+                    }
+                }
+                p {
+                    font-family: 'gbook';
+                    font-size: 14px;
+                    color: #464646;
+                }
+            }
+        }
+        #cabinet-block {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 100px;
+            .menu {
+                display: flex;
+                flex-direction: column;
+                width: 20%;
+                .data {
+                    padding: 16px 32px;
+                    display: flex;
+                    flex-direction: column;
+                    background-color: #000;
+                    border-radius: 6px 6px 0px 0px;
+                    color: #FFFFFF;
+                    gap: 10px;
+                    font-size: 20px;
+                    font-family: 'cpromed';
+                }
+                .data-btn {
+                    display: flex;
+                    flex-direction: column;
+                    button {
+                        background-color: #FFFFFF;
+                        padding: 32px 32px;
+                        text-align: left;
+                        font-size: 20px;
+                        font-family: 'cpromed';
+                        border: 1px solid #E6E6E6;
+                        &.active {
+                            color: #3878FF;
+                        }
+                    }
+                    
+                }
+            }
+            .con {
+                width: 40%;
+                .cn {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 48px;
+                    p {
+                        font-size: 36px;
+                        font-family: 'cpromed';
+                        color: #070707;
+                    }
+                    .cnr {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 40px;
+                        .data-rows {
+                            width: 100%;
+                            display: flex;
+                            gap: 60px;
+                            .field {
+                                width: 40%;
+                                display: flex;
+                                flex-direction: column;
+                                gap: 4px;
+                                flex: 1;
+                                position: relative;
+                                label {
+                                    font-family: 'cproreg';
+                                    font-size: 16px;
+                                    font-weight: 300;
+                                    color: #0B0B0B;
+                                }
+                                input {
+                                    font-family: 'cpromed';
+                                    font-size: 20px;
+                                    padding: 12px 24px;
+                                    background-color: #E6E6E6;
+                                    border: none;
+                                    border-radius: 4px;
+                                    box-sizing: border-box;
+                                }
+                                span {
+                                    min-height: 49px;
+                                    padding: 12px 24px;
+                                    background-color: #E6E6E6;
+                                    border: none;
+                                    border-radius: 4px;
+                                    box-sizing: border-box;
+                                    width: 100%;
+                                    cursor: text;
+
+                                    font-family: 'cpromed';
+                                    font-size: 20px;
+                                }
+                                .hidden { 
+                                    display: none; 
+                                }
+                            }
+                            
+                        }
+                        .btns {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 20px;
+                            button {
+                                width: 40%;
+                                padding: 16px 32px;
+                                background-color: #3878FF;
+                                color: #FFFFFF;
+                                border: none;
+                                border-radius: 6px;
+                                font-size: 16px;
+                                font-family: 'gbook';
+                            }
+                            #edit {
+                                background-color: #FFFFFF;
+                                color: #000;
+                                border: 1px solid #000;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}
+@media screen and (min-width: 300px) and (max-width: 768px) {
+    body {
+        width: 100%;
+        header {
+            padding: 12px;
+            justify-content: space-between;
+            align-items: center;
+            a {
+                width: 20%;
+                img {
+                    width: 100%;
+                }
+            }
+            .container {
+                display: none;
+                .inbut {
+                    display: none;
+                }
+                .botcon {
+                    display: none;
+                }
+            }
+            .lk {
+                width: 10%;
+                justify-content: space-between;
+                #count {
+                    display: none;
+                }
+                a {
+                    display: none;
+                    width: 100%;
+                    img {
+                        display: none;
+                        width: 100%;
+                    }
+                }
+                
+            }
+        }
+        .banner {
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            .zagolovok {
+                display: none;
+            }
+            img {
+                max-width: 150px;
+                width: 55%;
+            }
+            .one {
+                top: 0px;
+            }
+            .two {
+                position: relative;
+                top: 4px;
+            }
+        }
+        section {
+            gap: 10px;
+            padding: 12px;
+            .btn {
+                p {
+                    font-size: 24px;
+                }
+                .go-new {
+                    font-size: 12px;
+                    padding: 8px;
+                    white-space: nowrap;
+                }
+            }
+            .tcont {
+                gap: 12px;
+                .go-no {
+                    display: none;
+                } 
+                .t-shirts-container {
+                    align-items: center;
+                    transition: transform 0.4s ease;
+                    gap: 10px;
+                    padding: 0px;
+                    .t-shirt-card {
+                        width: fit-content;
+                        flex: 0 0 calc(54% / 1);
+                        padding: 12px;
+                        .info {
+                            position: absolute;
+                            margin: 10px;
+                            .t-shirt-collection {
+                                white-space: nowrap;
+                                font-size: 12px;
+                            }
+                        }
+                        .t-shirt-image {
+                            width: 100%;
+                            border-radius: 6px;
+                        }
+                        .t-shirt-name {
+                            font-size: 20px;
+                        }
+                        .price {
+                            font-size: 28px;
+                        }
+                        .buy {
+                            padding: 12px 24px;
+                            font-size: 14px;
+                            display: flex;
+                        }
+                        .buy-one-click {
+                            padding: 12px 24px;
+                            font-size: 14px;
+                        }
+                    }
+                    .t-shirt-card:hover {
+                        transform: none;
+                        box-shadow: none;
+                    }    
+                        
+                }
+            }
+            .tcont-btn {
+                margin-bottom: 40px;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+                justify-content: center;
+                width: 100%;
+                button {
+                    width: 24px;
+                }
+            }
+        }
+        footer {
+            gap: 0px;
+            height: fit-content;
+            .top {
+                padding: 0px;
+                .container {
+                    display: none;
+                }
+            }
+            .mid {
+                display: none;
+            }
+            .bot {
+                display: none;
+            }
+            menu {
+                justify-content: space-between;
+                height: fit-content;
+                display: flex;
+                padding: 20px;
+                a {
+                    img {
+                        width: 80%;
+                    }
+                }
+            }
+        }
+        //catalog
+        .catalogs {
+            padding: 10px;
+            flex-direction: column;
+
+            .sortname {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-between;
+                h1 {
+                    font-family: 'cproreg';
+                    font-size: 32px;
+                    font-weight: 800;
+                }
+                .sort-form {
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+
+                    &__label {
+                        font-family: 'gbook';
+                        font-size: 12px;
+                        color: #090909;
+                    }
+
+                    &__select {
+                        display: flex;
+                        justify-content: center;
+                        padding: 4px 6px;
+                        padding-right: 46px;
+                        border-radius: 12px;
+                        font-family: 'gbook';
+                        font-size: 14px;
+                        cursor: pointer;
+                        appearance: none;
+                        border: none;
+
+                        &:focus {
+                            outline: none;
+                            border-color: #3878FF;
+                        }
+                    }
+                }
+                .rotatable {
+                    display: inline-block;
+                    position: relative;
+                    right: 54px; 
+                    transition: transform 0.3s ease;
+                }
+            }
+            .filters-catalog {
+
+                display: flex;
+                flex-direction: column;
+                gap: 42px;
+                .catalog {
+                    align-items: center;
+                    width: 100%;
+                    .tconti {
+                        width: 100%;
+                        gap: 20px;
+                        .t-shirts-container {
+                            width: fit-content;
+                            gap: 20px;
+                            .t-shirt-card {
+                                align-items: flex-start;
+                                width: fit-content;
+                                border-radius: 6px;
+                                border: 0px solid #E6E6E6;
+                                transition: none;
+                                .info {
+                                    position: absolute;
+                                    margin: 6px;
+                                    .t-shirt-collection {
+                                        font-size: 12px;
+                                        border-radius: 6px;
+                                        padding: 4px 8px;
+                                    }
+                                }
+                                .t-shirt-image {
+                                    border-radius: 6px;
+                                }
+                                .price {
+                                    width: 100%;
+                                    text-align: end;
+                                    font-size: 24px;
+                                }
+                                .buy {
+                                    padding: 8px 16px;
+                                    border-radius: 6px;
+                                }
+                                .buy-one-click {
+                                    padding: 8px 16px;
+                                    border-radius: 6px;
+                                }
+                                .buy-one-click:active {
+                                    color: #FFFFFF;
+                                    background-color: #9e9d9d;
+                                }
+                            }
+                            .t-shirt-card:hover {
+                                transform: none;
+                                box-shadow: none;
+                            }        
+                        }
+                    }
+                }
+                .filters {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                    p {
+                        font-family: 'montbold';
+                        font-size: 24px;
+                    }
+                    .filter {
+                        .filter-header {
+                            width: 100%;
+                            font-size: 18px;
+                            span {
+                                font-size: 18px;
+                            }
+                            .filter-arrow {
+                                rotate: 180deg;
+                                transition: all 0.3s ease;
+                            }
+                            
+                        }
+                        .filter-body {
+                            margin-top: 10px;
+                            gap: 10px;
+                            
+                            .check1 {
+                                gap: 10px;
+                                font-size: 14px;
+                                .check {
+                                    border-radius: 6px;
+                                }
+                            }
+
+                            .pit {
+                                background-color: #E6E6E6;
+                                border: none;
+                                border-radius: 12px;
+                                font-family: 'cproreg';
+                                font-weight: 400;
+                                font-size: 16px;
+                                padding: 10px 16px;
+                                margin-left: 2px;
+                                width: 65%;
+                            }
+                            .pit:hover {
+                                border: 2px solid #3878FF;
+                            }
+                            .pit:focus {
+                                border: none;
+                                outline: 2px solid #3878FF;
+                            }
+                        }
+                        #colors {
+                            margin-top: 20px;
+                            display: grid;
+                            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+                            gap: 20px;
+                            width: 100%;
+                            background-color: #FFFFFF;
+                            max-height: 0;
+                            overflow: hidden;
+                            padding: 2px 0px;
+                            opacity: 0;
+                            transition: 
+                            max-height 0.4s ease,
+                            padding 0.3s ease,
+                            opacity 0.3s ease;
+                            .color1, .color2, .color3, .color4, .color5 {
+                                width: 50px;
+                                height: 50px;
+                                border-radius: 36px;
+                                border: none;
+                            }
+                            .color1 {
+                                background-color: #FFFFFF;
+                                border: 3px solid #3878FF;
+                            }
+                            .color2 {
+                                background-color: #090909;
+                            }
+                            .color3 {
+                                background-color: #686761;
+                            }
+                            .color4{
+                                background-color: #C6DAEC;
+                            }
+                            .color5 {
+                                background-color: #D0C5DE;
+                            }
+                        }
+                        #prints {
+                            margin-top: 20px;
+                            display: grid;
+                            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                            gap: 20px;
+                            width: 100%;
+                            background-color: #FFFFFF;
+                            max-height: 0;
+                            overflow: hidden;
+                            padding: 2px 0px;
+                            opacity: 0;
+                            transition: 
+                                max-height 0.4s ease,
+                                padding 0.3s ease,
+                                opacity 0.3s ease;
+                            .print1, .print2, .print3, .print4, .print5, .print6, .print7 {
+                                border-radius: 6px;
+                                border: none;
+                                padding: 8px 16px;
+                                font-family: 'cproreg';
+                                font-size: 14px;
+                                transition: all 0.01s ease-in;
+                                
+                            }
+                            .print1 {
+                                background-color: #EA3BC4;
+                                color: #FFFFFF;
+                            }
+                            .print3 {
+                                background-color: #B3112F;
+                                color: #FFFFFF;
+                            }
+                            .print4 {
+                                background-color: #3B3B3B;
+                                color: #FFFFFF;
+                            }
+                            .print5 {
+                                background-color: #A259FF;
+                                color: #FFFFFF;
+                            }
+                            .print6 {
+                                background-color: #FFB71B;
+                                color: #FFFFFF;
+                            }
+                            .print7 {
+                                background-color: #FF7043;
+                                color: #FFFFFF;
+                            }
+                            .print1:hover, .print2:hover, .print3:hover, .print4:hover, .print5:hover, .print6:hover, .print7:hover {
+                                border: 3px solid #3878FF;
+                            }
+                        }
+                    }
+                    .filter.active .filter-arrow {
+                        transform: rotate(180deg);
+                    }
+                    .btns {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 16px;
+                        .seeing {
+                            border-radius: 16px;
+                            padding: 24px 12px;
+                            gap: 5px;
+                            font-family: 'gbook';
+                            font-size: 16px;
+                            border: none;
+                            background-color: #1C1C1C;
+                            color: #FFFFFF;
+                            cursor: pointer;
+                        }
+                        .notsee {
+                            border-radius: 16px;
+                            padding: 24px 12px;
+                            gap: 5px;
+                            font-family: 'gbook';
+                            font-size: 16px;
+                            border: 3px solid #3878FF;
+                            background-color: #FFFFFF;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}

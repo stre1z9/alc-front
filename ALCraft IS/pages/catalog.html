@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Каталог</title>
+</head>
+<body>
+    <header>
+        <a href="../index.html"><img src="../assets/icons/logo.svg" alt="logo" ></a>
+        <div class="container">
+            <div class="inbut">
+                <input placeholder="Найди свой товар">
+                <button><img src="../assets/icons/search.svg"></button>
+            </div>
+            <div class="botcon">
+                <a href="#">Каталог товаров</a>
+                <a href="">Новинки</a>
+                <a href="">Популярные</a>
+                <a href="">Доставка и оплата</a>
+                <a href="">Контакты</a>
+            </div>
+        </div>
+        <div class="lk">
+            <a href="./basket.html" class="basket-icon"><img src="../assets/icons/bag.svg" alt="" id="cart-icon"></a>
+            <div id="count"></div>
+            <a href="lk.html"><img src="../assets/icons/user.svg" alt=""></a>
+        </div>
+    </header>
+    <section class="catalogs">
+        <div class="sortname">
+            <h1>Каталог</h1>
+            <form class="sort-form">
+                <label for="sort" class="sort-form__label">Сортировка:</label>
+                <select id="sort" name="sort" class="sort-form__select">
+                    <option value="popular" selected>По популярности</option>
+                    <option value="asc">По возрастанию</option>
+                    <option value="desc">По убыванию</option>
+                    <option value="new">По новинкам</option>
+                </select>
+                <img src="../assets/icons/vniz.svg" class="rotatable">
+            </form>
+        </div>
+        <div class="filters-catalog">
+            <div class="filters" id="filters">
+                <p>Фильтры</p>
+                <div class="filter">
+                    <button class="filter-header" type="button">
+                        <span>Цена</span>
+                        <svg class="filter-arrow"width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 7L7.17424 1.4882C7.90341 0.837267 9.09659 0.837267 9.82576 1.4882L16 7" stroke="#292929" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="filter-body">
+                        <input type="text" placeholder="от" class="pit">
+                        <input type="text" placeholder="до" class="pit">
+                    </div>
+                    <img src="../assets/icons/line.svg">
+                </div>
+
+                <div class="filter">
+                    <button class="filter-header" type="button">
+                        <span>Размер</span>
+                        <svg class="filter-arrow" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path filter-arrow d="M1 7L7.17424 1.4882C7.90341 0.837267 9.09659 0.837267 9.82576 1.4882L16 7" stroke="#292929" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="filter-body">
+                        <label class="check1"><input type="checkbox" class="check"> XS</label>
+                        <label class="check1"><input type="checkbox" class="check"> S</label>
+                        <label class="check1"><input type="checkbox" class="check"> M</label>
+                        <label class="check1"><input type="checkbox" class="check"> L</label>
+                        <label class="check1"><input type="checkbox" class="check"> XL</label>
+                        <label class="check1"><input type="checkbox" class="check"> XXL</label>
+                        <label class="check1"><input type="checkbox" class="check"> 3XL</label>
+                        <label class="check1"><input type="checkbox" class="check"> 4XL</label>
+                    </div>
+                    <img src="../assets/icons/line.svg">
+                </div>
+
+                <div class="filter">
+                    <button class="filter-header" type="button">
+                        <span>Цвет</span>
+                        <svg class="filter-arrow" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 7L7.17424 1.4882C7.90341 0.837267 9.09659 0.837267 9.82576 1.4882L16 7" stroke="#292929" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="filter-body" id="colors">
+                        <button class="color1"></button>
+                        <button class="color2"></button>
+                        <button class="color3"></button>
+                        <button class="color4"></button>
+                        <button class="color5"></button>
+                    </div>
+                    <img src="../assets/icons/line.svg">
+                </div>
+
+                <div class="filter">
+                    <button class="filter-header" type="button">
+                        <span>Крой</span>
+                        <svg class="filter-arrow" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 7L7.17424 1.4882C7.90341 0.837267 9.09659 0.837267 9.82576 1.4882L16 7" stroke="#292929" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="filter-body">
+                        <label class="check1"><input type="checkbox" class="check">Oversize </label>
+                        <label class="check1"><input type="checkbox" class="check">Прямой </label>
+                    </div>
+                    <img src="../assets/icons/line.svg">
+                </div>
+
+                <div class="filter">
+                    <button class="filter-header" type="button">
+                        <span>Принт</span>
+                        <svg class="filter-arrow" width="17" height="8" viewBox="0 0 17 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 7L7.17424 1.4882C7.90341 0.837267 9.09659 0.837267 9.82576 1.4882L16 7" stroke="#292929" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="filter-body" id="prints">
+                        <button class="print1">Джо Джо</button>
+                        <button class="print2">Без принта</button>
+                        <button class="print3">Магическая битва</button>
+                        <button class="print4">Евангелион</button>
+                        <button class="print5">Геншин Импакт</button>
+                        <button class="print6">MEMES</button>
+                        <button class="print7">ART</button>
+                    </div>
+                    <img src="../assets/icons/line.svg">
+                </div>
+                <div class="btns">
+                    <button class="seeing" id="see">Показать</button>
+                    <button class="notsee" id="notsee">Скрыть</button>
+                </div>
+            </div>
+            <div class="catalog">
+                <div class="tconti">
+                    <div class="loading">Загрузка данных...</div>
+                    <div class="t-shirts-container" id="carouselTrack">      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="top">
+            <div class="container">
+                <p class="name">Навигация</p>
+                <div class="cont">
+                    <a href="">Каталог</a>
+                    <a href="">Услуги</a>
+                    <a href="">Доставка</a>
+                    <a href="">Вопросы</a>
+                </div>
+            </div>
+            <div class="container">
+                <p class="name">Категории</p>
+                <div class="cont">
+                    <a href="">Базовые футболки</a>
+                    <a href="">Коллекции футболок</a>
+                    <a href="">Мерч под ключ</a> 
+                </div>
+            </div>
+            <div class="container">
+                <p class="name">Контакты</p>
+                <div class="cont">
+                    <div class="m">
+                        <img src="../assets/icons/mobile.svg">
+                        <a href="tel: +79189968999">+7 (918) 996-89-99</a>
+                    </div>
+                    <div class="m">
+                        <img src="../assets/icons/message-text.svg">
+                        <a href="mailto: alcraft.ru@gmail.com">alcraft.ru@gmail.com</a>
+                    </div>
+                    <div class="m">
+                        <img src="../assets/icons/tut.png">
+                        <a>г. Анапа, ул. Астраханская 84а</a>
+                    </div>
+                    <div class="icons">
+                        <a><img src="../assets/icons/wp.svg" alt="whatsapp"></a>
+                        <img src="../assets/icons/telegram.svg" alt="telegram">
+                        <img src="../assets/icons/vk.svg" alt="vkontakte">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mid"></div>
+        <div class="bot">
+            <p>ALCRAFT 2022-2025</p>
+            <div class="prava">
+                <img src="../assets/icons/c.svg">
+                <p>ИП Фомин Владислав Сергеевич</p>
+            </div>
+            <a>ИНН 230113362260</a>
+        </div>
+        <menu>
+          <a><img src="" alt="home"></a>
+          <a><img src="" alt="catalog"></a>
+          <a><img src="../assets/icons/search-normal.svg"></a>
+          <a href="../pages/basket.html"><img src="../assets/icons/bag.svg"></a>
+          <a href="../pages/lk.html"><img src="../assets/icons/user.svg"></a>
+        </menu>
+    </footer>
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/modules/common/helpers/animation.helpers.js"></script>
+    <script type="module">
+        
+
+    </script>
+    <div id="size-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div class="modal-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; min-width: 300px;">
+            <h3>Выберите размер</h3>
+            <div id="size-options" style="display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap;">
+                <!-- Размеры будут добавляться через JS -->
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button id="confirm-size" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Добавить</button>
+                <button id="cancel-size" style="padding: 10px 20px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">Отмена</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

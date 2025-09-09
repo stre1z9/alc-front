@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог футболок</title>
+  <link rel="stylesheet" href="./css/index.css">
+</head>
+<body>
+  <header>
+    <a href="../index.html"><img src="../assets/icons/logo.svg" alt="logo" ></a>
+    <div class="container">
+      <div class="inbut">
+        <input placeholder="Найди свой товар">
+        <button><img src="./assets/icons/search.svg"></button>
+      </div>
+      <div class="botcon">
+        <a href="./pages/catalog.html">Каталог товаров</a>
+        <a href="">Новинки</a>
+        <a href="">Популярные</a>
+        <a href="">Доставка и оплата</a>
+        <a href="">Контакты</a>
+      </div>
+    </div>
+    <div class="lk">
+      <a href="./pages/basket.html" class="basket-icon"><img src="./assets/icons/bag.svg" alt="" id="cart-icon"></a>
+      <div id="count"></div>
+      <a href="./pages/lk.html"><img src="./assets/icons/user.svg" alt=""></a>
+    </div>
+  </header>
+  <div class="banner">
+    <div class="zagolovok">
+      <div class="tech">
+        <div class="text">
+          <h1>ПРОСТО БУДЬ СОБОЙ</h1>
+          <p>Без шаблонов. Без компромиссов. Только твой стиль. Новая коллекция футболок уже здесь.</p>
+        </div>
+        <button class="go-ctg" id="btn-ctg"><p>Перейти в каталог</p><img src="./assets/icons/Vector.svg"></button>
+      </div>
+      <div class="go-no">
+        <button><img src="./assets/icons/Vector2.svg"></button>
+        <button><img src="./assets/icons/Vector3.svg"></button>
+      </div>
+    </div>
+    <img src="./assets/img/girl.png" class="one">
+    <img src="./assets/img/boy.png" class="two">
+  </div>
+  <section>
+    <div class="btn">
+      <p>Новинки</p>
+      <button class="go-new">К новинкам <img src="./assets/icons/Vector.svg"></button>
+    </div>
+    <div class="tcont">
+      <div class="loading">Загрузка данных...</div>
+      <button class="go-no prev">
+          <img src="./assets/icons/Vector2.svg" alt="prev">
+      </button>  
+      <div class="t-shirts-container" id="carouselTrack">
+            
+      </div>
+      <button class="go-no next">
+        <img src="./assets/icons/Vector3.svg" alt="next">
+      </button>
+    </div>
+    <div class="tcont-btn">
+        <button class="btn-go-go"></button>
+        <button class="btn-go-go"></button>
+        <button class="btn-go-go"></button>
+        <button class="btn-go-go"></button>
+        <button class="btn-go-go"></button>
+        <button class="btn-go-go"></button>
+    </div>
+    <div class="btn">
+      <p>Популярные</p>
+      <button class="go-new">К популярным <img src="./assets/icons/Vector.svg"></button>
+    </div>
+    <div class="tcont">
+      <div class="loading">Загрузка данных...</div>
+      <button class="go-no prev">
+          <img src="./assets/icons/Vector2.svg" alt="prev">
+      </button>  
+      <div class="t-shirts-container" id="carouselTrack">
+            
+      </div>
+      <button class="go-no next">
+        <img src="./assets/icons/Vector3.svg" alt="next">
+      </button>
+    </div>
+    <div class="tcont-btn">
+         
+    </div>
+  </section>
+  <footer>
+        <div class="top">
+            <div class="container">
+                <p class="name">Навигация</p>
+                <div class="cont">
+                    <a href="./pages/catalog.html">Каталог</a>
+                    <a href="">Услуги</a>
+                    <a href="">Доставка</a>
+                    <a href="">Вопросы</a>
+                </div>
+            </div>
+            <div class="container">
+                <p class="name">Категории</p>
+                <div class="cont">
+                    <a href="">Базовые футболки</a>
+                    <a href="">Коллекции футболок</a>
+                    <a href="">Мерч под ключ</a> 
+                </div>
+            </div>
+            <div class="container">
+                <p class="name">Контакты</p>
+                <div class="cont">
+                    <div class="m">
+                        <img src="./assets/icons/mobile.svg">
+                        <a href="tel: +79189968999">+7 (918) 996-89-99</a>
+                    </div>
+                    <div class="m">
+                        <img src="./assets/icons/message-text.svg">
+                        <a href="mailto: alcraft.ru@gmail.com">alcraft.ru@gmail.com</a>
+                    </div>
+                    <div class="m">
+                        <img src="./assets/icons/tut.png">
+                        <a>г. Анапа, ул. Астраханская 84а</a>
+                    </div>
+                    <div class="icons">
+                        <a><img src="./assets/icons/wp.svg" alt="whatsapp"></a>
+                        <img src="./assets/icons/telegram.svg" alt="telegram">
+                        <img src="./assets/icons/vk.svg" alt="vkontakte">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mid"></div>
+        <div class="bot">
+            <p>ALCRAFT 2022-2025</p>
+            <div class="prava">
+                <img src="./assets/icons/c.svg">
+                <p>ИП Фомин Владислав Сергеевич</p>
+            </div>
+            <a>ИНН 230113362260</a>
+        </div>
+        <menu>
+          <a><img src="" alt="home"></a>
+          <a><img src="" alt="catalog"></a>
+          <a><img src="./assets/icons/search-normal.svg"></a>
+          <a href="./pages/basket.html"><img src="./assets/icons/bag.svg"></a>
+          <a href="./pages/lk.html"><img src="./assets/icons/user.svg"></a>
+        </menu>
+    </footer>
+  <script type="module" src="./js/data.js"></script>
+  <script type="module" src="js/modules/common/helpers/animation.helpers.js"></script>
+  <div id="size-modal" class="wb-modal">
+  <div class="wb-modal__overlay"></div>
+  <div class="wb-modal__content">
+    <div class="wb-modal__header">
+      <h3 class="wb-modal__title">Выберите размер</h3>
+      <button class="wb-modal__close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="#333333" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="wb-modal__body">
+      <div class="size-grid">
+        <!-- Размеры будут добавлены динамически -->
+      </div>
+    </div>
+    
+    <div class="wb-modal__footer">
+      <button class="wb-button wb-button--primary wb-modal__confirm" disabled>
+        <span>Выбрать</span>
+      </button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
