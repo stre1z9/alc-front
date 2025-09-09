@@ -8,7 +8,7 @@
 </head>
 <body>
   <header>
-    <a href="../index.html"><img src="./assets/icons/logo.svg" alt="logo" ></a>
+    <a href="../index.html"><img src="../assets/icons/logo.svg" alt="logo" ></a>
     <div class="container">
       <div class="inbut">
         <input placeholder="Найди свой товар">
@@ -151,31 +151,32 @@
     </footer>
   <script type="module" src="./js/data.js"></script>
   <script type="module" src="js/modules/common/helpers/animation.helpers.js"></script>
+  <script type="module" src="js/modules/common/helpers/toast.helpers.js"></script>
   <div id="size-modal" class="wb-modal">
-  <div class="wb-modal__overlay"></div>
-  <div class="wb-modal__content">
-    <div class="wb-modal__header">
-      <h3 class="wb-modal__title">Выберите размер</h3>
-      <button class="wb-modal__close">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M18 6L6 18M6 6L18 18" stroke="#333333" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
+    <div class="wb-modal__overlay"></div>
+    <div class="wb-modal__content">
+      <div class="wb-modal__header">
+        <h3 class="wb-modal__title">Выберите размер</h3>
+        <button class="wb-modal__close">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#333333" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
     
-    <div class="wb-modal__body">
-      <div class="size-grid">
-        <!-- Размеры будут добавлены динамически -->
+      <div class="wb-modal__body">
+        <div class="size-grid">
+
+        </div>
+      </div>
+    
+      <div class="wb-modal__footer">
+        <button class="wb-button wb-button--primary wb-modal__confirm" disabled>
+          <span>Выбрать</span>
+        </button>
       </div>
     </div>
-    
-    <div class="wb-modal__footer">
-      <button class="wb-button wb-button--primary wb-modal__confirm" disabled>
-        <span>Выбрать</span>
-      </button>
-    </div>
   </div>
-</div>
+  <div id="toast-container" class="toast-container"></div>
 </body>
-
 </html>

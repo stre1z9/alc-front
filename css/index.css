@@ -4,6 +4,125 @@
   margin: 0;
 }
 
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  min-width: 300px;
+  max-width: 400px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.toast.hide {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.toast-success {
+  background-color: #f6ffed;
+  border: 1px solid #b7eb8f;
+  color: #52c41a;
+}
+
+.toast-error {
+  background-color: #fff2f0;
+  border: 1px solid #ffccc7;
+  color: #ff4d4f;
+}
+
+.toast-warning {
+  background-color: #fffbe6;
+  border: 1px solid #ffe58f;
+  color: #faad14;
+}
+
+.toast-info {
+  background-color: #e6f7ff;
+  border: 1px solid #91d5ff;
+  color: #1890ff;
+}
+
+.toast-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.toast-content {
+  flex-grow: 1;
+}
+
+.toast-title {
+  font-family: "cpromed";
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.toast-message {
+  font-family: "cpromed";
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
 @font-face {
   font-family: "cpromed";
   src: url(../assets/fonts/CeraPro-Medium.ttf);
@@ -485,6 +604,7 @@ body section .tcont .go-no:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 body section .tcont .t-shirts-container {
+  width: 90%;
   display: flex;
   flex-wrap: nowrap;
   transition: transform 0.4s ease;
@@ -492,12 +612,11 @@ body section .tcont .t-shirts-container {
   padding: 10px;
 }
 body section .tcont .t-shirts-container .t-shirt-card {
-  flex: 0 0 30%;
+  flex: 0 0 22.5%;
   min-width: 0px;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  width: 90%;
+  padding: 8px;
   border-radius: 6px;
   gap: 12px;
   transition: all 0.3s ease;
@@ -523,9 +642,21 @@ body section .tcont .t-shirts-container .t-shirt-card .t-shirt-name {
   font-size: 24px;
 }
 body section .tcont .t-shirts-container .t-shirt-card .price {
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-family: "cpromed";
+}
+body section .tcont .t-shirts-container .t-shirt-card .price .new-price {
+  font-weight: 600;
   font-size: 32px;
+  color: #e53935;
+}
+body section .tcont .t-shirts-container .t-shirt-card .price .regular-price {
+  font-weight: 500;
+  font-size: 24px;
+  text-decoration: line-through;
+  color: #999;
 }
 body section .tcont .t-shirts-container .t-shirt-card .buy {
   cursor: pointer;
@@ -741,42 +872,52 @@ body section .filters-catalog .catalog .tconti .t-shirts-container {
   gap: 40px;
 }
 body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card {
+  flex: 0 0 22.5%;
   height: -moz-fit-content;
   height: fit-content;
   min-width: 0px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 16px;
-  width: 90%;
-  border-radius: 32px;
-  border: 3px solid #E6E6E6;
+  padding: 8px;
+  border-radius: 6px;
   gap: 12px;
   transition: all 0.3s ease;
 }
 body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .info {
-  display: flex;
-  margin-right: auto;
+  position: absolute;
+  margin: 10px;
 }
 body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .info .t-shirt-collection {
   font-family: "cproreg";
   font-size: 14px;
   border-radius: 6px;
-  background-color: #B3112F;
   padding: 8px 16px;
   color: #FFFFFF;
 }
 body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .t-shirt-image {
   width: 100%;
-  border-radius: 24px;
+  border-radius: 6px;
 }
 body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .t-shirt-name {
   font-family: "cpromed";
   font-size: 20px;
 }
 body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-family: "cpromed";
-  font-size: 20px;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .price .new-price {
+  font-weight: 600;
+  font-size: 32px;
+  color: #e53935;
+}
+body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .price .regular-price {
+  font-weight: 500;
+  font-size: 24px;
+  text-decoration: line-through;
+  color: #999;
 }
 body section .filters-catalog .catalog .tconti .t-shirts-container .t-shirt-card .buy {
   width: 100%;

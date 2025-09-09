@@ -67,7 +67,7 @@ class ProductFilter {
                 <p class="t-shirt-name">${product.tShirtName || "Без названия"}</p>
                 <div class="price">
                     ${product.discount
-                        ? `
+                        ? `<span class="regular-price">${product.price}</span>
                            <span class="new-price">${Math.round((product.price || 0) * (1 - product.discount/100))} ₽</span>`
                         : ``}
                 </div>
@@ -305,39 +305,36 @@ class ProductFilter {
 }
 
 function initCartHandlers() {
-    document.addEventListener("click", async (e) => {
-        const btn = e.target.closest(".buy");
-        if (!btn) return;
-        const card = btn.closest(".t-shirt-card");
-        if (!card) return;
+    
+}
+document.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".buy");
+    if (!btn) return;
+    const card = btn.closest(".t-shirt-card");
+    if (!card) return;
 
-        const product = JSON.parse(card.dataset.product || "{}");
-        product._id = product._id || uid();
-        product.qty = product.qty || 1;
+    const product = JSON.parse(card.dataset.product || "{}");
+    product._id = product._id || uid();
+    product.qty = product.qty || 1;
 
-        e.preventDefault();
+    e.preventDefault();
 
-        try {
-            // Получаем размеры из данных продукта или используем стандартные
-            const sizes = product.sizes || ['S', 'M', 'L', 'XL'];
+    try {
+
+        const sizes = product.sizes || [ 'XS' , 'S', 'M', 'L', 'XL' , '2XL' , '3XL' , '4XL' ]; 
             
-            // Показываем модалку и ждем выбора размера
-            const selectedSize = await showSizeModal(sizes);
-            
-            // Добавляем размер к продукту
-            product.size = selectedSize;
-            
-            // Отправляем в корзину
-            addToCart(product);
-            updateCounter();
-            showToast(`Товар добавлен в корзину (размер: ${selectedSize})`, "success");
+        const selectedSize = await showSizeModal(sizes);
+
+        product.size = selectedSize;
+
+        addToCart(product);
+        updateCounter();
+        showToast(`Товар добавлен в корзину (размер: ${selectedSize})`, "success");
             
         } catch (error) {
-            // Пользователь закрыл модалку
-            console.log("Добавление в корзину отменено");
+        console.log("Добавление в корзину отменено");
         }
-    });
-}
+});
 function showToast(message, type = "success") {
     const toast = document.createElement("div");
     toast.className = `toast toast-${type}`;

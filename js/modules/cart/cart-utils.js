@@ -11,27 +11,20 @@ export function getCurrentUser() {
     storedToken: localStorage.getItem("access_token")
   });
 
-  const isAuthenticated = userId && userId !== 'undefined' && userId !== 'null' && token && token !== 'undefined' && token !== 'null';
-
-  console.log('🔐 Пользователь авторизован:', isAuthenticated);
-  
   return {
-    userId: isAuthenticated ? userId : "guest",
-    token: isAuthenticated ? token : null,
-    isAuthenticated: isAuthenticated
+    userId: userId,
+    token: token,
+
   };
 }
-// cart-utils.js
 let currentProduct = null; 
 export function showSizeModal(sizes) {
   const modal = document.getElementById('size-modal');
   const sizeGrid = modal.querySelector('.size-grid');
   const confirmBtn = modal.querySelector('.wb-modal__confirm');
-  
-  // Очищаем предыдущие размеры
+
   sizeGrid.innerHTML = '';
-  
-  // Создаем кнопки размеров в стиле WB
+
   sizes.forEach(size => {
     const sizeItem = document.createElement('div');
     sizeItem.className = 'size-item';
@@ -41,23 +34,19 @@ export function showSizeModal(sizes) {
     `;
     sizeGrid.appendChild(sizeItem);
   });
-  
-  // Сбрасываем состояние
+
   confirmBtn.disabled = true;
-  
-  // Обработчик выбора размера
+
   const sizeInputs = modal.querySelectorAll('.size-input');
   sizeInputs.forEach(input => {
     input.addEventListener('change', () => {
       confirmBtn.disabled = false;
     });
   });
-  
-  // Показываем модальное окно
+
   modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden'; // Блокируем скролл страницы
-  
-  // Возвращаем Promise с выбранным размером
+  document.body.style.overflow = 'hidden'; 
+
   return new Promise((resolve, reject) => {
     const onConfirm = () => {
       const selectedSize = modal.querySelector('.size-input:checked').value;
@@ -105,14 +94,9 @@ function hideSizeModal() {
     currentProduct = null;
 }
 export const getCart = () => {
-  const { userId, isAuthenticated } = getCurrentUser(); // 🔥 ДОБАВИЛИ isAuthenticated
+  const { userId} = getCurrentUser(); // 🔥 ДОБАВИЛИ isAuthenticated
   
-  console.log('🛒 getCart called for user:', userId, 'Authenticated:', isAuthenticated);
-
-  if (!isAuthenticated) {
-    console.log('👤 Гость - возвращаем пустую корзину');
-    return [];
-  }
+  console.log('🛒 getCart called for user:', userId);
 
   const cartData = localStorage.getItem(`cart_${userId}`);
   
@@ -495,7 +479,6 @@ export async function syncCartOnAuthChange() {
   }
 }
 
-// 🔥 ДОБАВЛЕНИЕ ТОВАРА ЧЕРЕЗ КНОПКУ
 export function setupCartButtons() {
   document.addEventListener('click', async (e) => {
     const addButton = e.target.closest('.add-to-cart');
@@ -505,8 +488,7 @@ export function setupCartButtons() {
     
     const product = {
       discount: addButton.dataset.discount,
-      productId: addButton.dataset.productId, // 🔥 ИСПОЛЬЗУЕМ ГОТОВЫЙ productId
-      tShirtName: addButton.dataset.name,
+      productId: addButton.dataset.productId, 
       price: parseFloat(addButton.dataset.price),
       size: addButton.dataset.size,
       color: addButton.dataset.color,
@@ -545,15 +527,13 @@ document.addEventListener('click', async (e) => {
     if (e.target.closest('.remove')) {
         const card = e.target.closest('.t-shirt-card');
         const productId = card.dataset.productId || card.dataset.id;
-        
-        // Просто вызываем функцию и обновляем интерфейс
+
         const success = await removeFromCart(productId);
         
         if (success) {
-            // Удаляем карточку из DOM
+
             card.remove();
-            
-            // Обновляем итоги
+
             updateCartTotal();
         }
     }

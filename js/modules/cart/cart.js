@@ -32,7 +32,7 @@ export function renderBasket() {
   let totalFinalSum = 0;
   
   const html = cart.map(item => {
-    const size = item.size[0];
+    const size = item.size;
     const qty   = Number(item.qty) || 1;
     const price = Number(item.price) || 0;
     const disc  = Number(item.discount) || 0;

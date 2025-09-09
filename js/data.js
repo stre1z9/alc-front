@@ -60,9 +60,9 @@ function cardHTML(tShirt) {
       <p class="t-shirt-name">${product.tShirtName || "Без названия"}</p>
       <div class="price">
         ${product.discount && product.discount > 0
-          ? `
+          ? `<span class="regular-price">${(product.price || 0).toFixed(0)} ₽</span>
              <span class="new-price">${Math.round((product.price || 0) * (1 - product.discount/100))} ₽</span>`
-          : `<span class="regular-price">${(product.price || 0).toFixed(0)} ₽</span>`}
+          : ``}
       </div>
       <button class="buy">В корзину</button>
       <button class="buy-one-click">Купить</button>
@@ -198,7 +198,7 @@ function initCarousels(tShirts) {
 
     function updateCarousel() {
       const maxIndex = Math.max(0, cards.length - itemsPerView);
-      const cardWidth = 90 / itemsPerView;
+      const cardWidth = 100 / itemsPerView;
       const translateX = -currentIndex * cardWidth;
       
       track.style.transform = `translateX(${translateX}%)`;
@@ -288,15 +288,15 @@ function showToast(message, type = "success") {
       padding: 12px 20px;
       border-radius: 4px;
       z-index: 1000;
-      animation: slideIn 0.3s ease;
+      animation: slideIn 1.5s ease;
   `;
   
   document.body.appendChild(toast);
   
   setTimeout(() => {
-      toast.style.animation = "slideOut 0.3s ease";
-      setTimeout(() => toast.remove(), 300);
-  }, 3000);
+      toast.style.animation = "slideOut 1.5s ease";
+      setTimeout(() => toast.remove(), 1000);
+  }, 10000);
 }
 
 document.addEventListener("click", async (e) => {
@@ -312,22 +312,17 @@ document.addEventListener("click", async (e) => {
   e.preventDefault();
 
   try {
-    // Получаем размеры из данных продукта или используем стандартные
-    const sizes = product.sizes || ['S', 'M', 'L', 'XL'];
-    
-    // Показываем модалку и ждем выбора размера
+    const sizes = product.sizes || [ 'XS' , 'S', 'M', 'L', 'XL' , '2XL' , '3XL' , '4XL' ];
+
     const selectedSize = await showSizeModal(sizes);
-    
-    // Добавляем размер к продукту
+
     product.size = selectedSize;
-    
-    // Отправляем в корзину
+
     addToCart(product);
     updateCounter();
     showToast(`Товар добавлен в корзину (размер: ${selectedSize})`, "success");
     
   } catch (error) {
-    // Пользователь закрыл модалку
     console.log("Добавление в корзину отменено");
   }
 });
@@ -345,34 +340,12 @@ document.addEventListener("DOMContentLoaded", () => {
           from { transform: translateX(0); opacity: 1; }
           to { transform: translateX(100%); opacity: 0; }
       }
-      
-      /* Стили для цен */
-      .old-price {
-          text-decoration: line-through;
-          color: #999;
-          margin-right: 8px;
-      }
-      
-      .new-price {
-          color: #e53935;
-          font-weight: bold;
-      }
-      
-      .regular-price {
-          font-weight: bold;
-      }
-      
       /* Стили для карусели */
       .t-shirts-container {
         display: flex;
         transition: transform 0.3s ease;
       }
       
-      .t-shirt-card {
-        flex: 0 0 calc(100% / var(--items-per-view, 1));
-        box-sizing: border-box;
-        padding: 0 10px;
-      }
       
       .btn-go-go.active {
         background: #007bff !important;

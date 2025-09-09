@@ -27,20 +27,7 @@ function showToast(message, type = "success") {
 }
 
 document.addEventListener("click", (e) => {
-  const button = e.target.closest(".buy");
-  if (!button) return;
-
-  if(!button.classList.contains("added")){
-    const originalText = button.textContent;
-    button.classList.add("added");
-    button.textContent = "Товар добавлен";
-    
-    setTimeout(() => {
-      button.classList.remove("added");
-      button.textContent = originalText;
-    }, 2000);
-    showToast("Товар добавлен в корзину", "success");
-  }
+  
 
   const product = button.closest(".t-shirt-card");
   const img = product.querySelector(".t-shirt-image");

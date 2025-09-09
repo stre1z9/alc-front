@@ -1,4 +1,5 @@
 // order.js
+import { showToasts } from '../modules/common/helpers/toast.helpers.js';
 import { getCart, updateCounter } from '../modules/cart/cart-utils.js';
 
 export async function createOrder() {
@@ -25,18 +26,12 @@ export async function createOrder() {
         }
 
         if (totalAmount <= 0) {
-            alert('Неверная сумма заказа');
+            toast.warning("Неверная сумма заказа!")
             return;
         }
 
         const userId = localStorage.getItem('userId');
         const token = localStorage.getItem('access_token');
-
-        if (!userId || !token) {
-            alert('Пользователь не авторизован');
-            window.location.href = 'login.html';
-            return;
-        }
 
         const orderData = {
             userId: userId,
@@ -56,21 +51,20 @@ export async function createOrder() {
                 },
                 body: JSON.stringify(orderData)
             });
-
+            
             if (!response.ok) {
                 throw new Error(`Ошибка сервера: ${response.status}`);
             }
 
-            const result = await response.json();
-            console.log('Заказ создан:', result);
             await clearCartAfterOrder();
+            showToasts('Заказ успешно создан!', 'success');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
             
-            alert('Заказ успешно создан!');
-            window.location.reload();
-
         } catch (error) {
             console.error('Ошибка создания заказа:', error);
-            alert('Ошибка при создании заказа: ' + error.message);
+            showToasts('Ошибка создания заказа', 'error' + error.message);
         } finally {
 
             button.disabled = false;
@@ -100,7 +94,6 @@ async function clearCartAfterOrder() {
         }
         
     } catch (error) {
-        console.error('Ошибка очистки корзины:', error);
     }
 }
 

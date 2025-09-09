@@ -1,6 +1,7 @@
 import { AuthService } from "./auth-service.js";
 import { DomHelper } from "./dom-helpers.js";
 import { syncCartOnAuthChange,  getCart, saveCartToServer } from "../cart/cart-utils.js";
+import { showToasts } from "../common/helpers/toast.helpers.js";
 
 export class AuthManager {
     constructor() {
@@ -129,11 +130,11 @@ export class AuthManager {
 
             this.showCabinet();
             this.displayUserData(user);
-            this.domHelper.showNotification('Регистрация успешна!', 'success');
+            showToasts('Регистрация успешна!', 'success');
             
         } catch (error) {
             console.error('Ошибка регистрации:', error);
-            this.domHelper.showNotification('Ошибка регистрации: ' + error.message, 'error');
+            showToasts('Ошибка регистрации: ' + error.message, 'error');
         }
     }
 
@@ -156,7 +157,7 @@ export class AuthManager {
             
         } catch (error) {
             console.error('Ошибка входа:', error);
-            this.domHelper.showNotification('Ошибка входа: ' + error.message, 'error');
+            showToasts('Ошибка входа: ' + error.message, 'error');
         } finally {
             this.domHelper.showLoading(false);
         }
@@ -168,17 +169,17 @@ export class AuthManager {
         const phoneRegex = /^\+?\d{10,15}$/;
 
         if (!emailRegex.test(email) && !phoneRegex.test(email)) {
-            this.domHelper.showNotification('Введите корректный email или телефон!', 'error');
+            showToasts('Введите корректный email или телефон!', 'warning');
             return false;
         }
 
         if (password.length < 6) {
-            this.domHelper.showNotification('Пароль должен быть не менее 6 символов!', 'error');
+            showToasts('Пароль должен быть не менее 6 символов!', 'warning');
             return false;
         }
 
         if (password !== repeat) {
-            this.domHelper.showNotification('Пароли не совпадают!', 'error');
+            showToasts('Пароли не совпадают!', 'error');
             return false;
         }
 
@@ -190,12 +191,12 @@ export class AuthManager {
         const phoneRegex = /^\+?\d{10,15}$/;
 
         if (!emailRegex.test(email) && !phoneRegex.test(email)) {
-            this.domHelper.showNotification('Введите корректный email или телефон!', 'error');
+            showToasts('Введите корректный email или телефон!', 'warning');
             return false;
         }
 
         if (password.length < 6) {
-            this.domHelper.showNotification('Пароль должен быть не менее 6 символов!', 'error');
+            showToasts('Пароль должен быть не менее 6 символов!', 'warning');
             return false;
         }
 
@@ -210,7 +211,6 @@ export class AuthManager {
         const user = result.data.user;
         
         if (!accessToken || !refreshToken || !user) {
-            console.error('❌ Invalid server response structure:', result);
             throw new Error('Неверный формат ответа сервера при входе');
         }
 
@@ -222,9 +222,8 @@ export class AuthManager {
         this.currentUser = user;
         this.showCabinet();
         this.displayUserData(user);
-        this.domHelper.showNotification('Вход выполнен успешно!', 'success');
-        
-        console.log('⏰ Scheduling cart sync after login...');
+        showToasts('Вход выполнен успешно!', 'success');
+
         setTimeout(() => {
             syncCartOnAuthChange().catch(console.error);
         }, 1000);
