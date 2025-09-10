@@ -8,7 +8,7 @@ export async function createOrder() {
 
     button.addEventListener('click', async (e) => {
         e.preventDefault();
-
+        const addressElement = document.getElementById('address');
         const totalCountElement = document.getElementById('quant');
         const totalAmountElement = document.getElementById('fp');
         
@@ -16,7 +16,7 @@ export async function createOrder() {
             alert('Ошибка: не найдены данные заказа');
             return;
         }
-
+        const address = addressElement.textContent || "Адрес отсутствует";
         const totalCount = parseInt(totalCountElement.textContent) || 0;
         const totalAmount = parseFloat(totalAmountElement.textContent.replace(/[^\d.,]/g, '').replace(',', '.')) || 0;
 
@@ -36,7 +36,8 @@ export async function createOrder() {
         const orderData = {
             userId: userId,
             totalCount: totalCount,
-            totalAmount: totalAmount
+            totalAmount: totalAmount,
+            address: address
         };
 
         try {

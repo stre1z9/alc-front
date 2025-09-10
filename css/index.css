@@ -1923,6 +1923,9 @@ section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .
   font-size: 20px;
   font-family: "cpromed";
 }
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord p span {
+  color: #3878FF;
+}
 section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord .order-items {
   display: flex;
   gap: 10px;
@@ -1963,6 +1966,9 @@ section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .
   font-size: 28px;
   font-family: "cpromed";
   color: #3878FF;
+}
+section .containers #cabinet-block #address-con .cn .cnr p {
+  font-size: 20px;
 }
 @keyframes fadeIn {
   from {

@@ -243,7 +243,7 @@ function renderOrderDetails(order, container) {
     container.innerHTML = `
         <div class="order-details">
             <div class="ord">
-                <p>Адрес:${orderData.deliveryAddress || ""} </p>
+                <p>Адрес: <span>${orderData.address || ""} </span></p>
                 <div class="order-items">
                     ${items.map(item => `
                         ${image ? `<img src="${image}" alt="Изображение товара" class="t-shirt-image">` : ''}

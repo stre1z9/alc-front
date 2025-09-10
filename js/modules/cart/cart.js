@@ -154,7 +154,30 @@ document.addEventListener("DOMContentLoaded", () => {
   renderBasket();
   updateCounter();
 });
+document.addEventListener('DOMContentLoaded', function() {
+    const editIcon = document.querySelector('.edit-address-icon');
+    const addressElement = document.getElementById('address');
+    
+    if (editIcon && addressElement) {
+        editIcon.style.cursor = 'pointer';
+        editIcon.title = 'Редактировать адрес';
+        
+        editIcon.addEventListener('click', function() {
+            const newAddress = prompt('Введите новый адрес доставки:', addressElement.textContent);
+            
+            if (newAddress !== null) { // Если не нажали "Отмена"
+                const trimmedAddress = newAddress.trim();
+                addressElement.textContent = trimmedAddress || 'Адрес не указан';
+                localStorage.setItem('userAddress', trimmedAddress);
+            }
+        });
 
+        const savedAddress = localStorage.getItem('userAddress');
+        if (savedAddress) {
+            addressElement.textContent = savedAddress;
+        }
+    }
+});
 document.addEventListener("click", (e) => {
   const button = e.target.closest(".go-ctg");
   if (!button) return;

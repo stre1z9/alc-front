@@ -1942,6 +1942,9 @@ section {
                                             p {
                                                 font-size: 20px;
                                                 font-family: 'cpromed';
+                                                span {
+                                                    color: #3878FF;
+                                                }
                                             }
                                             .order-items {
                                                 display: flex;
@@ -1993,7 +1996,16 @@ section {
                             }
                         }
                         #non-active-orders {
-                            
+
+                        }
+                    }
+                }
+            }
+            #address-con {
+                .cn {
+                    .cnr {
+                        p {
+                            font-size: 20px;
                         }
                     }
                 }
