@@ -4,101 +4,164 @@
 }
 
 @font-face {
-  font-family: "cpromed";
+  font-family: 'cpromed';
   src: url(../assets/fonts/CeraPro-Medium.ttf);
 }
+
 @font-face {
-  font-family: "cproreg";
+  font-family: 'cproreg';
   src: url(../assets/fonts/CeraPro-Regular.ttf);
 }
+
 @font-face {
-  font-family: "gbook";
+  font-family: 'gbook';
   src: url(../assets/fonts/gotham_book.otf);
 }
+
 body {
   width: 100%;
+  height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
 }
+
 body footer {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: #0b0b0b;
   gap: 60px;
 }
+
 body footer .top {
   padding: 120px 200px 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   gap: 160px;
-  justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
+
 body footer .top .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 32px;
 }
+
 body footer .top .container .name {
-  font-family: "cpromed";
+  font-family: 'cpromed';
   font-size: 24px;
   color: #FFFFFF;
   font-weight: 500;
 }
+
 body footer .top .container .cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   gap: 24px;
 }
+
 body footer .top .container .cont a {
   color: #E6E6E6;
-  font-family: "cproreg";
+  font-family: 'cproreg';
   font-size: 20px;
   text-decoration: none;
   font-weight: 400;
 }
+
 body footer .top .container .cont .m {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 10px;
 }
+
 body footer .top .container .cont .icons {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   gap: 16px;
 }
+
 body footer .top .container .cont .icons img {
   width: 36px;
   height: 36px;
 }
+
 body footer .mid {
   margin-left: 200px;
   margin-right: 200px;
   border: 1px solid #646464;
 }
+
 body footer .bot {
   padding: 0px 200px 120px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   gap: 80px;
 }
+
 body footer .bot p {
-  font-family: "gbook";
+  font-family: 'gbook';
   font-size: 20px;
   color: #646464;
   font-weight: 500;
 }
+
 body footer .bot .prava {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 12px;
 }
+
 body footer .bot a {
-  font-family: "gbook";
+  font-family: 'gbook';
   font-size: 20px;
   color: #646464;
   font-weight: 500;
   text-decoration: underline;
-}/*# sourceMappingURL=footer.css.map */
+}
+/*# sourceMappingURL=footer.css.map */

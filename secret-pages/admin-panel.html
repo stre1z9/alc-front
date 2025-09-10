@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="secret-super.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <a href="../index.html"><img src="../assets/icons/logo.svg" alt="logo" ></a>
+        <div class="container">
+            <button data-tab="create-item" >Добавить товар</button>
+            <button data-tab="orders" id="ord" class="active">Отследить заказы</button>
+            <button id="delete-item">Удалить товар</button>
+        </div>
+    </header>
+    <section>
+        <div id="create-item" class="tab-content">
+            <form id="tShirtForm">
+                <p>Добавить товар</p>
+                <input type="text" name="tShirtName" placeholder="Название товара" required>
+                <input type="text" name="nameCollection" placeholder="Название коллекции" required>
+                <input type="text" name="collectionID" placeholder="ID коллекции (опционально)">
+                <input type="text" name="color" placeholder="Цвет" required>
+                <input type="text" name="cut" placeholder="Покрой" required>
+                <input type="number" name="price" placeholder="Цена" step="0.01" required>
+                <input type="file" id="imageUpload" multiple accept="image/*">
+                <input type="text" id="picturePath" name="picturePath" placeholder="URL изображений (через запятую)">
+                <input type="number" name="discount" placeholder="Скидка (%)" value="0">
+                <input type="text" name="techInfo" placeholder="Техническая информация (через запятую)">
+                <input type="text" name="size" placeholder="Размеры (через запятую)">
+                <input type="text" name="density" placeholder="Плотность (через запятую)">
+                <textarea name="description" placeholder="Описание товара"></textarea>
+                <button type="submit">Создать товар</button>
+            </form>
+        </div>
+        <div id="orders" class="tab-content active">
+
+        </div>
+    </section>
+    <footer>
+
+    </footer>
+    <script src="secret-js-admin-tshirt.js"></script>
+</body>
+</html>
