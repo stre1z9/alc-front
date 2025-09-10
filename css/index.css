@@ -278,7 +278,6 @@
   border-top: 1px solid #e8e8e8;
 }
 
-/* Кнопка в стиле WB */
 .wb-button {
   display: block;
   width: 100%;
@@ -1295,7 +1294,7 @@ body section .contain #basket-container .t-shirt-card .price {
   display: flex;
   align-items: flex-start;
   gap: 92px;
-  font-family: "cpromed";
+  font-family: "cpromed", serif;
   font-size: 24px;
 }
 body section .contain #basket-container .t-shirt-card .price .pr {
@@ -1366,7 +1365,7 @@ body section .contain .making {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 body section .contain .making p {
-  font-family: "cprobold";
+  font-family: "cprobold", serif;
   font-size: 32px;
 }
 body section .contain .making .content {
@@ -1394,11 +1393,11 @@ body section .contain .making .content .con-wth-btn .con-wtn-full .salary-full .
   justify-content: space-between;
 }
 body section .contain .making .content .con-wth-btn .con-wtn-full .salary-full .dostavka p {
-  font-family: "cpromed";
+  font-family: "cpromed", serif;
   font-size: 24px;
 }
 body section .contain .making .content .con-wth-btn .con-wtn-full .salary-full .address {
-  font-family: "cpromed";
+  font-family: "cpromed", serif;
   font-size: 20px;
   color: #737373;
 }
@@ -1434,6 +1433,7 @@ body section .contain .making .content button {
   font-family: "gbook";
   font-size: 20px;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 body section .contain .making .content button:hover:not(:disabled) {
   background: #0056b3;
@@ -1521,9 +1521,10 @@ section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .
   border-radius: 12px;
   align-items: center;
   overflow: hidden;
+  cursor: pointer;
 }
 section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .hpv .butns .tab-btn {
-  font-family: "gbook";
+  font-family: "gbook", serif;
   font-size: 16px;
   background-color: transparent;
   border: none;
@@ -1532,7 +1533,7 @@ section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .
   border-radius: 12px;
   padding: 16px 32px;
   z-index: 2;
-  transition: color 0.3 ease;
+  transition: color 0.3s ease;
 }
 section .containers .form .form-login .form-wtn-p .form-wtn-btn .form-wtn-pass .hpv .butns .tab-btn.active {
   color: #FFFFFF;
@@ -1621,6 +1622,7 @@ section .containers .form .form-login .form-wtn-p button {
   border-radius: 16px;
   font-family: "gbook";
   font-size: 16px;
+  cursor: pointer;
   color: #FFFFFF;
 }
 section .containers .form .form-login p {
@@ -1661,11 +1663,29 @@ section .containers #cabinet-block .menu .data-btn button {
   font-size: 20px;
   font-family: "cpromed";
   border: 1px solid #E6E6E6;
+  cursor: pointer;
 }
 section .containers #cabinet-block .menu .data-btn button.active {
   color: #3878FF;
 }
+section .containers #cabinet-block .menu .data-btn button:hover {
+  background: #e0e0e0;
+}
+section .containers #cabinet-block .menu .data-btn button.active:hover {
+  background: #3878FF;
+  color: #FFFFFF;
+}
+section .containers #cabinet-block .menu .data-btn .logout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #646464;
+}
+section .containers #cabinet-block .menu .data-btn .logout:hover {
+  background: #e0e0e0;
+}
 section .containers #cabinet-block .con {
+  display: none;
   width: 40%;
 }
 section .containers #cabinet-block .con .cn {
@@ -1742,11 +1762,217 @@ section .containers #cabinet-block .con .cn .cnr .btns button {
   border-radius: 6px;
   font-size: 16px;
   font-family: "gbook";
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 section .containers #cabinet-block .con .cn .cnr .btns #edit {
   background-color: #FFFFFF;
   color: #000;
   border: 1px solid #000;
+  transition: all 0.3s ease;
+}
+section .containers #cabinet-block .con .cn .cnr .btns #edit:hover {
+  transform: scale(1.05);
+  background-color: #000;
+  color: #FFFFFF;
+}
+section .containers #cabinet-block .con .cn .cnr .btns #saveBtn:hover {
+  transform: scale(1.05);
+  background-color: #0b6acf;
+  color: #FFFFFF;
+}
+section .containers #cabinet-block .con .cn .cnr .butns {
+  position: relative;
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
+  background-color: #E6E6E6;
+  border-radius: 12px;
+  align-items: center;
+  overflow: hidden;
+}
+section .containers #cabinet-block .con .cn .cnr .butns .tab-btn {
+  font-family: "gbook";
+  font-size: 16px;
+  border: none;
+  width: 60%;
+  color: #000;
+  border-radius: 12px;
+  padding: 16px 32px;
+  position: relative;
+  background: none;
+  cursor: pointer;
+  color: #666;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+section .containers #cabinet-block .con .cn .cnr .butns .tab-btn.active {
+  color: #fff;
+}
+section .containers #cabinet-block .con .cn .cnr .butns .indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #000;
+  border-radius: 8px;
+  z-index: 1;
+  transition: transform 0.4s ease;
+}
+section .containers #cabinet-block .con .cn .cnr .butns .tab-btn.active ~ .indicator {
+  transform: translateX(100%);
+}
+section .containers #cabinet-block .con .cn .cnr .butns .tab-btn:nth-child(1).active ~ .indicator {
+  transform: translateX(0%);
+}
+section .containers #cabinet-block .con .cn .cnr .butns .tab-btn:nth-child(2).active ~ .indicator {
+  transform: translateX(100%);
+}
+section .containers #cabinet-block .con.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+section .containers #cabinet-block #history-con {
+  width: 70%;
+}
+section .containers #cabinet-block #history-con .cn .cnr .butns {
+  width: 50%;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders {
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order {
+  width: 100%;
+  border: 1px solid #000;
+  padding: 12px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-header .order-stage {
+  font-family: "gbook";
+  font-size: 16px;
+  color: #3878FF;
+  font-weight: 600;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-header .order-info {
+  width: 100%;
+  display: flex;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-header .order-info .order-main-info {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-header .order-info .order-main-info p {
+  font-family: "cpromed";
+  font-size: 24px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-header .order-info .order-main-info .dostavka {
+  font-family: "cproreg";
+  font-size: 20px;
+  color: #464646;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-header .order-info .order-price {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  width: 50%;
+  font-family: "cpromed";
+  font-size: 20px;
+  text-align: right;
+  color: #3878FF;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-toggle {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-toggle p {
+  cursor: pointer;
+  font-family: "cproreg";
+  font-size: 20px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content {
+  display: none;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord p {
+  font-size: 20px;
+  font-family: "cpromed";
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord .order-items {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord .order-items .order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord .order-items .order-item .item-name {
+  font-size: 32px;
+  font-family: "cpromed";
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord .order-items .order-item .item-quantity {
+  font-size: 18px;
+  font-family: "cpromed";
+  color: #3878FF;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord .order-items .order-item-price {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord .order-items .order-item-price p {
+  font-family: "cproreg";
+  font-size: 14px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .ord .order-items .order-item-price p .item-price {
+  font-family: "cpromed";
+  font-size: 18px;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .order-summary .summary-row {
+  display: flex;
+  justify-content: space-between;
+}
+section .containers #cabinet-block #history-con .cn .cnr #active-orders .order .order-details-content .order-details .order-summary .summary-row span {
+  font-size: 28px;
+  font-family: "cpromed";
+  color: #3878FF;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media screen and (min-width: 300px) and (max-width: 768px) {
@@ -1878,6 +2104,7 @@ section .containers #cabinet-block .con .cn .cnr .btns #edit {
   }
   body section .tcont-btn button {
     width: 24px;
+    cursor: pointer;
   }
   body footer {
     gap: 0px;

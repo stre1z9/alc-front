@@ -269,7 +269,6 @@
   border-top: 1px solid #e8e8e8;
 }
 
-/* Кнопка в стиле WB */
 .wb-button {
   display: block;
   width: 100%;
@@ -501,7 +500,6 @@ body {
                 }
             }
             .go-no {
-                
                 display: flex;
                 gap: 12px;
                 button {
@@ -1313,7 +1311,7 @@ body {
                         display: flex;
                         align-items: flex-start;
                         gap: 92px;
-                        font-family: 'cpromed';
+                        font-family: 'cpromed', serif;
                         font-size: 24px;
                         .pr {
                             display: flex;
@@ -1385,7 +1383,7 @@ body {
                 background-color: #FFFFFF;
                 box-shadow: 0 0 5px rgba(0,0,0,0.3);
                 p {
-                    font-family: 'cprobold';
+                    font-family: 'cprobold', serif;
                     font-size: 32px;
 
                 }
@@ -1409,7 +1407,7 @@ body {
                                     display: flex;
                                     justify-content: space-between;
                                     p {
-                                        font-family: 'cpromed';
+                                        font-family: 'cpromed', serif;
                                         font-size: 24px;
                                     }
                                     img {
@@ -1417,7 +1415,7 @@ body {
                                     }
                                 }
                                 .address {
-                                    font-family: 'cpromed';
+                                    font-family: 'cpromed', serif;
                                     font-size: 20px;
                                     color: #737373;
                                 }
@@ -1456,6 +1454,7 @@ body {
                         font-family: 'gbook';
                         font-size: 20px;
                         transition: all 0.3s ease;
+                        cursor: pointer;
                     }
                     button:hover:not(:disabled) {
                         background: #0056b3;
@@ -1526,30 +1525,31 @@ section {
                                     color: #070707;
                                 }
                                 .butns {
-                                    position: relative;
-                                    width: 100%;
-                                    display: inline-flex;
-                                    justify-content: space-between;
-                                    background-color: #E6E6E6;
-                                    border-radius: 12px;
-                                    align-items: center;
-                                    overflow: hidden;
-                                    .tab-btn {
-                                        font-family: 'gbook';
-                                        font-size: 16px;
-                                        background-color: transparent;
-                                        border: none;
-                                        width: 60%;
-                                        color: #000;
-                                        border-radius: 12px;
-                                        padding: 16px 32px;
-                                        z-index: 2;
-                                        transition: color 0.3 ease;
-                                        &.active {
-                                            color: #FFFFFF;
-                                            
-                                        }
-                                    }
+                                  position: relative;
+                                  width: 100%;
+                                  display: inline-flex;
+                                  justify-content: space-between;
+                                  background-color: #E6E6E6;
+                                  border-radius: 12px;
+                                  align-items: center;
+                                  overflow: hidden;
+                                  cursor: pointer;
+                                  .tab-btn {
+                                      font-family: 'gbook', serif;
+                                      font-size: 16px;
+                                      background-color: transparent;
+                                      border: none;
+                                      width: 60%;
+                                      color: #000;
+                                      border-radius: 12px;
+
+                                      padding: 16px 32px;
+                                      z-index: 2;
+                                      transition: color 0.3s ease;
+                                      &.active {
+                                        color: #FFFFFF;
+                                      }
+                                  }
                                     .indicator {
                                         position: absolute;
                                         top: 0;
@@ -1640,6 +1640,7 @@ section {
                         border-radius: 16px;
                         font-family: 'gbook';
                         font-size: 16px;
+                        cursor: pointer;
                         color: #FFFFFF;
                     }
                 }
@@ -1680,14 +1681,32 @@ section {
                         font-size: 20px;
                         font-family: 'cpromed';
                         border: 1px solid #E6E6E6;
-                        &.active {
-                            color: #3878FF;
-                        }
+                        cursor: pointer;
+                        
                     }
-                    
+                    button.active {
+                        color: #3878FF;
+                    }
+                    button:hover {
+                        background: #e0e0e0;
+                    }
+                    button.active:hover {
+                        background: #3878FF;
+                        color: #FFFFFF;
+                    }
+                    .logout {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        color: #646464;
+                    }
+                    .logout:hover {
+                        background: #e0e0e0;
+                    }   
                 }
             }
             .con {
+                display: none;
                 width: 40%;
                 .cn {
                     width: 100%;
@@ -1762,16 +1781,226 @@ section {
                                 border-radius: 6px;
                                 font-size: 16px;
                                 font-family: 'gbook';
+                                cursor: pointer;
+                                transition: all 0.3s ease;
                             }
                             #edit {
-                                background-color: #FFFFFF;
-                                color: #000;
-                                border: 1px solid #000;
+                              background-color: #FFFFFF;
+                              color: #000;
+                              border: 1px solid #000;
+                              transition: all 0.3s ease;
                             }
+                            #edit:hover {
+                                transform: scale(1.05);
+                                background-color: #000;
+                                color: #FFFFFF;
+                            }
+                            #saveBtn:hover {
+                                transform: scale(1.05);
+                                background-color: #0b6acf;
+                                color: #FFFFFF;
+                            }
+                        }
+                        .butns {
+                            position: relative;
+                            width: 100%;
+                            display: inline-flex;
+                            justify-content: space-between;
+                            background-color: #E6E6E6;
+                            border-radius: 12px;
+                            align-items: center;
+                            overflow: hidden;
+                            .tab-btn {
+                                font-family: 'gbook';
+                                font-size: 16px;
+                                border: none;
+                                width: 60%;
+                                color: #000;
+                                border-radius: 12px;
+                                padding: 16px 32px;
+                                position: relative;
+                                background: none;
+                                cursor: pointer;
+                                color: #666;
+                                z-index: 2;
+                                transition: color 0.3s ease;
+                            }
+                            .tab-btn.active {
+                                color: #fff;
+                            }
+                            .indicator {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                width: 50%; 
+                                height: 100%;
+                                background-color: #000;
+                                border-radius: 8px;
+                                z-index: 1;
+                                transition: transform 0.4s ease;
+                            }
+                            .tab-btn.active ~ .indicator {
+                                transform: translateX(100%);
+                            }
+                            .tab-btn:nth-child(1).active ~ .indicator {
+                                transform: translateX(0%);
+                            }
+                            .tab-btn:nth-child(2).active ~ .indicator {
+                                transform: translateX(100%);
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            .con.active {
+                display: block;
+                animation: fadeIn 0.3s ease;
+            }
+            #history-con {
+                width: 70%;
+                .cn {
+                    .cnr {
+                        .butns {
+                            width: 50%;
+                        }
+                        #active-orders {
+                            width: 100%;
+                            display: none;
+                            flex-direction: column;
+                            gap: 20px;
+                            .order {
+                                width: 100%;
+                                border: 1px solid #000;
+                                padding: 12px;
+                                border-radius: 6px;
+                                display: flex;
+                                flex-direction: column;
+                                gap: 20px;
+                                .order-header {
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 20px;
+                                    .order-stage {
+                                        font-family: 'gbook';
+                                        font-size: 16px;
+                                        color: #3878FF;
+                                        font-weight: 600;
+                                    }
+                                    .order-info {
+                                        width: 100%;
+                                        display: flex;
+                                        .order-main-info {
+                                            width: 50%;
+                                            display: flex;
+                                            flex-direction: column;
+                                            gap: 10px;
+                                            p {
+                                                font-family: 'cpromed';
+                                                font-size: 24px;
+                                            }
+                                            .dostavka {
+                                                font-family: 'cproreg';
+                                                font-size: 20px;
+                                                color: #464646;
+                                            }
+                                        }
+                                        .order-price {
+                                            display: flex;
+                                            justify-content: end;
+                                            align-items: end;
+                                            width: 50%;
+                                            font-family: 'cpromed';
+                                            font-size: 20px;
+                                            text-align: right;
+                                            color: #3878FF;
+                                        }
+                                    }
+                                }
+                                .order-details-toggle {
+                                    display: flex;
+                                    width: 100%;
+                                    justify-content: flex-end;
+                                    align-items: center;
+                                    gap: 10px;
+                                    p {
+                                        cursor: pointer;
+                                        font-family: 'cproreg';
+                                        font-size: 20px;
+                                    }
+                                }
+                                .order-details-content {
+                                    display: none;
+                                    .order-details {
+                                        display: flex;
+                                        flex-direction: column;
+                                        gap: 40px;
+                                        .ord {
+                                            display: flex;
+                                            flex-direction: column;
+                                            gap: 20px;
+                                            p {
+                                                font-size: 20px;
+                                                font-family: 'cpromed';
+                                            }
+                                            .order-items {
+                                                display: flex;
+                                                gap: 10px;
+                                                flex-direction: column;
+                                                .order-item {
+                                                    display: flex;
+                                                    justify-content: space-between;
+                                                    align-items: center;
+                                                    .item-name {
+                                                        font-size: 32px;
+                                                        font-family: 'cpromed';
+                                                    }
+                                                    .item-quantity {
+                                                        font-size: 18px;
+                                                        font-family: 'cpromed';
+                                                        color: #3878FF;
+                                                    }
+                                                }
+                                                .order-item-price {
+                                                    display: flex;
+                                                    flex-direction: row-reverse;
+                                                    justify-content: space-between;
+                                                    p {
+                                                        font-family: 'cproreg';
+                                                        font-size: 14px;
+                                                        .item-price {
+                                                            font-family: 'cpromed';
+                                                            font-size: 18px;
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        .order-summary {
+                                            .summary-row {
+                                                display: flex;
+                                                justify-content: space-between;
+                                                span {
+                                                    font-size: 28px;
+                                                    font-family: 'cpromed';
+                                                    color: #3878FF;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        #non-active-orders {
+                            
                         }
                     }
                 }
-
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
             }
         }
     }
@@ -1905,6 +2134,7 @@ section {
                 width: 100%;
                 button {
                     width: 24px;
+                    cursor: pointer;
                 }
             }
         }

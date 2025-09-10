@@ -25,7 +25,6 @@ export function showToasts(message, type = "success") {
     },
     warning: {
       background: '#ff9800',
-
     },
     info: {
       background: '#2196f3',

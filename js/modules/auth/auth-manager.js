@@ -26,7 +26,7 @@ export class AuthManager {
             });
         }
 
-        const logoutBtn = document.getElementById("logout");
+        const logoutBtn = document.querySelector(".logout");
         if (logoutBtn) {
             logoutBtn.addEventListener("click", () => {
                 this.logout();

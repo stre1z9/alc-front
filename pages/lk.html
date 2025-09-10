@@ -75,13 +75,13 @@
                         <p id="phone"></p>
                     </div>
                     <div class="data-btn">
-                        <button id="my-data active">Мои данные</button>
-                        <button id="history">История заказов</button>
-                        <button id="address">Адрес доставки</button>
-                        <button id="logout">Выход <img></button>
+                        <button class="my-data active" data-target="my-data-con">Мои данные</button>
+                        <button class="history" data-target="history-con">История заказов</button>
+                        <button class="address" data-target="address-con">Адрес доставки</button>
+                        <button class="logout">Выход <img src="../assets/icons/logout.svg"></button>
                     </div>
                 </div>
-                <div class="con" id="my-data-con">
+                <div class="con active" id="my-data-con">
                     <div class="cn">
                         <p>Мои данные</p>
                         <div class="cnr">
@@ -127,6 +127,27 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="con" id="history-con">
+                    <div class="cn">
+                        <p>История заказов</p>
+                        <div class="cnr">
+                            <div class="butns">
+                                <button class="tab-btn active" data-tab="active-orders">Активные</button>
+                                <button data-tab="non-active-orders" class="tab-btn">Завершенные</button>
+                                <div class="indicator"></div>
+                            </div>
+                            <div id="active-orders">
+                                
+                            </div>
+                            <div id="non-active-orders">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="con" id="address-con">
+                    
                 </div>
             </div>
         </div>
@@ -184,6 +205,8 @@
         </div>
     </footer>
     <script type="module" src="../js/main.js"></script>
+    <script type="module" src="../js/utils/lk.js"></script>
+    <script type="module" src="../js/modules/cabinet/cabinet.render.js"></script>
     <div id="toast-container" class="toast-container"></div>
 </body>
 </html>
