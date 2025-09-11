@@ -1,6 +1,6 @@
 import { AuthService } from "./auth-service.js";
 import { DomHelper } from "./dom-helpers.js";
-import { syncCartOnAuthChange,  getCart, saveCartToServer } from "../cart/cart-utils.js";
+import { getCart, saveCartToServer } from "../cart/cart-utils.js";
 import { showToasts } from "../common/helpers/toast.helpers.js";
 
 export class AuthManager {

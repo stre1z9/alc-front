@@ -159,7 +159,7 @@ function createOrderCard(orderData) {
             <p class="order-stage ${getStatusClass(status)}">${getStatusText(status)}</p>
             <div class="order-info">
                 <div class="order-main-info">
-                    <p>Заказ №<span class="order-id">${orderId}</span> от <span class="order-date">${formatDate(orderDate)}</span></p>
+                    <p>Заказ №<span class="order-id">${orderId}</span> от <span class="order-date">${new Date(orderData.created_at).toLocaleString('ru-RU')}</span></p>
                     <p class="dostavka">Доставим: <span class="delivery-method">${deliveryType}</span></p>
                     ${deliveryAddress ? `<p>Адрес: <span class="delivery-address">${deliveryAddress}</span></p>` : ''}
                 </div>
@@ -223,55 +223,98 @@ function renderOrderDetails(order, container) {
     if (order.data && typeof order.data === 'object') {
         orderData = order.data;
     }
-    const picturePath = orderData.items.picturePath;
-    let image = '';
     
-    // Безопасное получение изображения
-    if (Array.isArray(picturePath) && picturePath.length > 0) {
-        image = picturePath[0];
-    } else if (typeof picturePath === 'string') {
-        image = picturePath;
-    }
-
     const items = orderData.items || orderData.products || orderData.goods || [];
     const totalAmount = orderData.totalAmount || orderData.totalPrice || orderData.price || 0;
-    const totalCount = orderData.totalCount;
-    const totalPrice = totalAmount / totalCount;
+    const totalCount = orderData.totalCount || items.length;
     const discount = orderData.discount || orderData.discountPercent || 0;
     const finalAmount = Math.round(totalAmount * (1 - discount / 100));
+    
+    // Функция для форматирования цены
+    function formatPrice(price) {
+        return new Intl.NumberFormat('ru-RU').format(Math.round(price));
+    }
     
     container.innerHTML = `
         <div class="order-details">
             <div class="ord">
-                <p>Адрес: <span>${orderData.address || ""} </span></p>
+                <p>Адрес: <span>${orderData.address || ""}</span></p>
+                ${orderData.created_at ? `
+                <div class="summary-info">
+                    Дата заказа: ${new Date(orderData.created_at).toLocaleString('ru-RU')}
+                </div>
+                ` : ''}
                 <div class="order-items">
-                    ${items.map(item => `
-                        ${image ? `<img src="${image}" alt="Изображение товара" class="t-shirt-image">` : ''}
-                        <div class="order-item">
-                            <span class="item-name">${item.name || 'Товар'}</span>
-                            <span class="item-quantity">${totalCount || 1} шт.</span>
-                        </div>
-                        <div class="order-item-price">
-                            <p>Цена за шт: <span class="item-price">${formatPrice(totalPrice || 0)} ₽</span></p>
-                        </div>
-                    `).join('')}
+                    ${items.map(item => {
+                        // Получаем изображение для каждого товара
+                        const picturePath = item.picturePath;
+                        let image = '';
+                        
+                        if (Array.isArray(picturePath) && picturePath.length > 0) {
+                            image = picturePath[0];
+                        } else if (typeof picturePath === 'string') {
+                            image = picturePath;
+                        }
+                        
+                        // Рассчитываем цену со скидкой для каждого товара
+                        const itemDiscount = item.discount || 0;
+                        const itemPrice = item.price || 0;
+                        const itemFinalPrice = Math.round(itemPrice * (1 - itemDiscount / 100));
+                        const itemQuantity = item.quantity || 1;
+                        const itemTotalPrice = itemFinalPrice * itemQuantity;
+                        
+                        return `
+                            <div class="order-item-card">
+                                ${image ? `<img src="${image}" alt="${item.name || 'Товар'}" class="t-shirt-image">` : ''}
+                                <div class="order-item-info">
+                                    <div class="name">
+                                        <span class="item-name">${item.name || 'Товар'}</span>
+                                        <span class="item-collection">${item.nameCollection || ''}</span>
+                                    </div>
+                                    <div class="item-details">
+                                        <span>Размер: ${item.size || ''}</span>
+                                        <span>Цвет: ${item.color || ''}</span>
+                                        <span>Покрой: ${item.cut || ''}</span>
+                                    </div>
+                                    <div class="item-price-info">
+                                        ${itemDiscount > 0 ? `
+                                            <span class="discount-percent">-${itemDiscount}%</span>
+                                            <span class="original-price">${formatPrice(itemPrice)} ₽</span>
+                                            <span class="discounted-price">${formatPrice(itemFinalPrice)} ₽</span>
+                                            
+                                        ` : `
+                                            <span class="final-price">${formatPrice(itemPrice)} ₽</span>
+                                        `}
+                                    </div>
+                                    <div class="quant-total">
+                                        <span class="item-quantity">${itemQuantity} шт.</span>
+                                        <span class="item-total">Итого: ${formatPrice(itemTotalPrice)} ₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
                 </div>
             </div>
             
             <div class="order-summary">
-                ${discount > 0 ? `
+                <div class="summary-row">
+                    <span>Количество товаров:</span>
+                    <span>${totalCount} шт.</span>
+                </div>
                 
+                ${discount > 0 ? `
+                <div class="summary-row discount">
+                    <span>Скидка:</span>
+                    <span>-${discount}%</span>
+                </div>
                 ` : ''}
+                
                 <div class="summary-row total">
-                    <span>Итого:</span>
+                    <span>Итого к оплате:</span>
                     <span>${formatPrice(finalAmount)} ₽</span>
                 </div>
                 
-                ${orderData.deliveryAddress ? `
-                <div class="summary-info">
-                    <strong>Адрес:</strong> 
-                </div>
-                ` : ''}
                 
                 ${orderData.phone ? `
                 <div class="summary-info">

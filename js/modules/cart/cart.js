@@ -1,5 +1,6 @@
 // cart.js
-import { getCart, setCart, formatRub, updateCounter, saveCartToServer, syncCartOnAuthChange } from "./cart-utils.js";
+import { showToasts } from "../common/helpers/toast.helpers.js";
+import { getCart, setCart, formatRub, updateCounter, saveCartToServer, retryFailedSync } from "./cart-utils.js";
 
 const BASKET_ID = "basket-container";
 const LOADING_ID = "loading";
@@ -33,15 +34,15 @@ export function renderBasket() {
   
   const html = cart.map(item => {
     const size = item.size;
-    const qty   = Number(item.qty) || 1;
+    const quantity   = Number(item.quantity) || 1;
     const price = Number(item.price) || 0;
     const disc  = Number(item.discount) || 0;
     const final = Math.round(price * (1 - disc / 100));
     const collectionId = item.collectionId || 1;
-    const totalFinal = final * qty;
-    const totalPrice = price * qty;
+    const totalFinal = final * quantity;
+    const totalPrice = price * quantity;
     const img = Array.isArray(item.picturePath) ? (item.picturePath[0] || "") : (item.picturePath || "");
-    const discountSum = (price - final) * qty;
+    const discountSum = (price - final) * quantity;
     totalDiscount += discountSum;
     totalFinalSum += totalFinal;
     const color = getCollectionColor(collectionId);
@@ -66,7 +67,7 @@ export function renderBasket() {
         <div class="price">
           <div class="quantity">
             <button class="decrease" data-action="decrease" data-id="${item._id}" style="cursor: pointer">−</button>
-            <span class="qty-value">${qty}</span>
+            <span class="quantity-value">${quantity}</span>
             <button class="increase" data-action="increase" data-id="${item._id}" style="cursor: pointer">+</button>
           </div>
           <div class="pr">
@@ -118,7 +119,7 @@ function getCollectionColor(collectionId) {
   
   return colors[(id - 1) % colors.length];
 }
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
   const btn = e.target.closest("[data-action]");
   if (!btn) return;
 
@@ -126,22 +127,40 @@ document.addEventListener("click", (e) => {
   const action = btn.dataset.action;
   if (!id || !action) return;
 
-  let cart = getCart();
+  try {
+    let cart = getCart();
+    let hasChanges = false;
 
-  if (action === "remove") {
-    cart = cart.filter(i => i._id !== id);
-  } else if (action === "increase" || action === "decrease") {
-    cart = cart.map(i => {
-      if (i._id !== id) return i;
-      let qty = Number(i.qty) || 1;
-      qty = action === "increase" ? qty + 1 : Math.max(1, qty - 1);
-      return { ...i, qty };
-    });
+    if (action === "remove") {
+      cart = cart.filter(i => i._id !== id);
+      hasChanges = true;
+    } else if (action === "increase" || action === "decrease") {
+      cart = cart.map(i => {
+        if (i._id !== id) return i;
+        
+        let quantity = Number(i.quantity) || 1;
+        quantity = action === "increase" ? quantity + 1 : Math.max(1, quantity - 1);
+        
+        hasChanges = true;
+        return { ...i, quantity };
+      });
+    }
+
+    if (hasChanges) {
+      // Сначала сохраняем локально и обновляем UI
+      setCart(cart);
+      renderBasket();
+      updateCounter();
+      saveCartToServer(cart).catch(error => {
+        console.error('Ошибка синхронизации:', error);
+        showNotification('Ошибка синхронизации с сервером', 'error');
+      });
+    }
+
+  } catch (error) {
+    console.error(`Ошибка при ${action}:`, error);
+    showToasts('Произошла ошибка', 'error');
   }
-  
-  
-  setCart(cart);
-  renderBasket();
 });
 
 window.addEventListener("cart:updated", () => {
@@ -184,3 +203,4 @@ document.addEventListener("click", (e) => {
 
   window.location.href = "catalog.html";
 });
+setInterval(retryFailedSync, 30000);

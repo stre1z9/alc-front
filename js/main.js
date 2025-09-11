@@ -1,6 +1,6 @@
 import { AuthManager } from './modules/auth/auth-manager.js';
 import { setupUserDataHandlers } from './modules/auth/user-data-handler.js';
-import { updateCounter, fetchCartFromServer, syncCartOnAuthChange, setCart } from '../js/modules/cart/cart-utils.js';
+import { updateCounter, fetchCartFromServer, setCart } from '../js/modules/cart/cart-utils.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
     console.log('DOM loaded, initializing AuthManager...');

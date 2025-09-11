@@ -4,66 +4,43 @@
 }
 
 @font-face {
-  font-family: 'cpromed';
+  font-family: "cpromed";
   src: url(../assets/fonts/CeraPro-Medium.ttf);
 }
-
 @font-face {
-  font-family: 'cproreg';
+  font-family: "cproreg";
   src: url(../assets/fonts/CeraPro-Regular.ttf);
 }
-
 @font-face {
-  font-family: 'gbook';
+  font-family: "gbook";
   src: url(../assets/fonts/gotham_book.otf);
 }
-
 @font-face {
-  font-family: 'onder';
+  font-family: "onder";
   src: url(../assets/fonts/Onder.ttf);
 }
-
 body {
   width: 100%;
-  height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
 }
-
 body header {
   padding: 50px 100px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: #0b0b0b;
 }
-
 body header .container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   gap: 36px;
   width: 60%;
 }
-
 body header .container .inbut {
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
-
 body header .container .inbut input {
   width: 100%;
   padding: 12px 24px;
@@ -71,31 +48,17 @@ body header .container .inbut input {
   border: none;
   background-color: #292929;
 }
-
-body header .container .inbut input::-webkit-input-placeholder {
+body header .container .inbut input::-moz-placeholder {
   font-size: 16px;
-  font-family: 'cpromed';
+  font-family: "cpromed";
 }
-
-body header .container .inbut input:-ms-input-placeholder {
-  font-size: 16px;
-  font-family: 'cpromed';
-}
-
-body header .container .inbut input::-ms-input-placeholder {
-  font-size: 16px;
-  font-family: 'cpromed';
-}
-
 body header .container .inbut input::placeholder {
   font-size: 16px;
-  font-family: 'cpromed';
+  font-family: "cpromed";
 }
-
 body header .container .inbut input:focus {
   outline: none;
 }
-
 body header .container .inbut button {
   position: relative;
   right: 66px;
@@ -104,31 +67,19 @@ body header .container .inbut button {
   border-radius: 0px 24px 24px 0px;
   background-color: #292929;
 }
-
 body header .container .botcon {
   width: 93%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  justify-content: space-between;
 }
-
 body header .container .botcon a {
-  font-family: 'cproreg';
+  font-family: "cproreg";
   font-size: 20px;
   text-decoration: none;
   color: #fff;
 }
-
 body header .lk {
   width: 7%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-/*# sourceMappingURL=header.css.map */
+  justify-content: space-between;
+}/*# sourceMappingURL=header.css.map */

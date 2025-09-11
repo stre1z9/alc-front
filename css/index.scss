@@ -1940,6 +1940,95 @@ section {
                                             display: flex;
                                             flex-direction: column;
                                             gap: 20px;
+                                            .summary-info {
+                                                font-size: 18px;
+                                                font-family: 'cpromed';
+                                            }
+                                            .order-items {
+                                                display: flex;
+                                                gap: 40px;
+                                                flex-direction: column;
+                                                .order-item-card {
+                                                    height: 100%;
+                                                    display: flex;
+                                                    gap: 20px;
+                                                    img {
+                                                        height: fit-content;
+                                                        width: 15%;
+                                                    }
+                                                    .order-item-info {
+                                                        height: fit-content;   
+                                                        width: 100%;
+                                                        display: flex;
+                                                        flex-direction: column;
+                                                        gap: 6px;
+                                                        .name {
+                                                            width: 100%;
+                                                            display: flex;
+                                                            justify-content: space-between;
+                                                            .item-name {
+                                                                font-family: 'cpromed';
+                                                                font-size: 24px;
+                                                            }
+                                                            .item-collection {
+                                                                font-family: 'cproreg';
+                                                                font-size: 20px;
+                                                                background-color: #0056b3;
+                                                                color: #fff;
+                                                                padding: 6px;
+                                                                border-radius: 6px;
+                                                            }
+                                                        }
+                                                        .item-details {
+                                                            display: flex;
+                                                            flex-direction: column;
+                                                            span {
+                                                                font-size: 18px;
+                                                                font-family: 'gbook';
+                                                            }
+                                                        }
+                                                        .item-price-info {
+                                                            display: flex;
+                                                            flex-direction: column;
+                                                            gap: 6px;
+                                                            align-items: end;
+                                                            .original-price {
+                                                                font-family: 'cpromed';
+                                                                font-size: 16px;
+                                                                text-decoration: line-through;
+                                                                color: #999;
+                                                            }
+                                                            .discounted-price {
+                                                                font-family: 'cpromed';
+                                                                font-size: 22px;
+                                                                color: #B3112F;
+                                                            }
+                                                            .discount-percent {
+                                                                width: fit-content;
+                                                                font-family: 'cpromed';
+                                                                font-size: 20px;
+                                                                background-color: #e53935;
+                                                                text-align: end;
+                                                                color: #FFFFFF;
+                                                                padding: 4px;
+                                                            }
+                                                        }
+                                                        .quant-total {
+                                                            display: flex;
+                                                            justify-content: space-between;
+                                                            .item-quantity {
+                                                                font-size: 18px;
+                                                                font-family: 'cpromed';
+                                                                color: #3878FF;
+                                                            }
+                                                            .item-total {
+                                                                font-size: 24px;
+                                                                font-family: 'cpromed';
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                             p {
                                                 font-size: 20px;
                                                 font-family: 'cpromed';
@@ -1947,39 +2036,7 @@ section {
                                                     color: #3878FF;
                                                 }
                                             }
-                                            .order-items {
-                                                display: flex;
-                                                gap: 10px;
-                                                flex-direction: column;
-                                                .order-item {
-                                                    display: flex;
-                                                    justify-content: space-between;
-                                                    align-items: center;
-                                                    .item-name {
-                                                        font-size: 32px;
-                                                        font-family: 'cpromed';
-                                                    }
-                                                    .item-quantity {
-                                                        font-size: 18px;
-                                                        font-family: 'cpromed';
-                                                        color: #3878FF;
-                                                    }
-                                                }
-                                                .order-item-price {
-                                                    display: flex;
-                                                    flex-direction: row-reverse;
-                                                    justify-content: space-between;
-                                                    p {
-                                                        font-family: 'cproreg';
-                                                        font-size: 14px;
-                                                        .item-price {
-                                                            font-family: 'cpromed';
-                                                            font-size: 18px;
-
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                            
                                         }
                                         .order-summary {
                                             .summary-row {

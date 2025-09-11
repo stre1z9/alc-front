@@ -94,7 +94,7 @@ function hideSizeModal() {
     currentProduct = null;
 }
 export const getCart = () => {
-  const { userId} = getCurrentUser(); // 🔥 ДОБАВИЛИ isAuthenticated
+  const { userId } = getCurrentUser(); // 🔥 ДОБАВИЛИ isAuthenticated
   
   console.log('🛒 getCart called for user:', userId);
 
@@ -121,14 +121,14 @@ export function formatRub(n) {
 
 export function updateCounter() {
   const cart = getCart();
-  const total = cart.reduce((s, i) => s + (Number(i.qty) || 1), 0);
+  const total = cart.reduce((s, i) => s + (Number(i.quantity) || 1), 0);
 
   ["count", "counter", "quant", "cart-count"].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.textContent = total;
   });
 
-  const totalPrice = cart.reduce((s, i) => s + (Number(i.price) * Number(i.qty) || 0), 0);
+  const totalPrice = cart.reduce((s, i) => s + (Number(i.price) * Number(i.quantity) || 0), 0);
   const totalEl = document.getElementById('cart-total');
   if (totalEl) totalEl.textContent = formatRub(totalPrice);
 }
@@ -161,7 +161,7 @@ export async function addToCart(product) {
         return;
     }
 
-    product.qty = Math.max(1, Number(product.qty) || 1);
+    product.quantity = Math.max(1, Number(product.quantity) || 1);
     product.price = Number(product.price) || 0;
 
     if (!product.productId) {
@@ -173,7 +173,7 @@ export async function addToCart(product) {
     const existingIndex = cart.findIndex(item => buildKey(item) === keyNew);
 
     if (existingIndex !== -1) {
-        cart[existingIndex].qty = (Number(cart[existingIndex].qty) || 1) + product.qty;
+        cart[existingIndex].quantity = (Number(cart[existingIndex].quantity) || 1) + product.quantity;
     } else {
         if (!product._id) product._id = uid();
         cart.push(product);
@@ -232,51 +232,119 @@ function findCartItem(itemId, productId = null) {
   const cart = getCart();
 
   if (productId) {
-    const item = cart.find(i => i.productId === productId);
+    const item = cart.find(i => i.productId === productId || i._id === productId);
     if (item) return item;
   }
-  return cart.find(i => i._id === itemId);
-}
-
-export async function updateCartItemQuantity(productId, newQuantity) {
-  let cart = getCart();
-  const item = findCartItem(null, productId);
   
-  if (item) {
-    item.qty = Math.max(1, Number(newQuantity) || 1);
-    item.lastUpdated = Date.now(); // 🔥 ОБНОВЛЯЕМ МЕТКУ ВРЕМЕНИ
+  if (itemId) {
+    return cart.find(i => i._id === itemId || i.productId === itemId);
+  }
+  
+  return null;
+}
+export async function updateMultipleCartItems(updates) {
+  let cart = getCart();
+  let hasChanges = false;
+
+  updates.forEach(update => {
+    const item = findCartItem(null, update.productId);
+    if (item && item.quantity !== update.quantity) {
+      item.quantity = Math.max(1, Number(update.quantity) || 1);
+      item.lastUpdated = Date.now();
+      hasChanges = true;
+    }
+  });
+
+  if (hasChanges) {
     setCart(cart);
     updateCounter();
     
     try {
       await saveCartToServer(cart);
+      console.log('✅ Корзина синхронизирована с сервером');
+      return true;
     } catch (error) {
-      console.error('Ошибка обновления количества:', error);
+      console.error('❌ Ошибка синхронизации корзины:', error);
+      // Можно добавить механизм повтора или уведомление пользователя
+      return false;
+    }
+  }
+  
+  return true;
+}
+export async function updateCartItemQuantity(productId, newQuantity) {
+  let cart = getCart();
+  const item = findCartItem(null, productId);
+  
+  if (item) {
+    const oldQuantity = item.quantity;
+    item.quantity = Math.max(1, Number(newQuantity) || 1);
+    item.lastUpdated = Date.now();
+    setCart(cart);
+    updateCounter();
+    
+    try {
+      // Синхронизируем с сервером
+      await saveCartToServer(cart);
+      console.log('✅ Количество товара обновлено на сервере');
+    } catch (error) {
+      // Если ошибка синхронизации - откатываем изменения
+      item.quantity = oldQuantity;
+      setCart(cart);
+      updateCounter();
+      console.error('❌ Ошибка обновления количества на сервере:', error);
+      throw error;
     }
   }
 }
 
 export async function removeFromCart(productId) {
     try {
-        // 1. Получаем текущую корзину
-        const cart = JSON.parse(localStorage.getItem(`cart_${localStorage.getItem('userId')}`) || "[]");
+        // 1. Получаем userId
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            console.error('UserId не найден');
+            return false;
+        }
         
-        // 2. Фильтруем массив, убирая товар
-        const newCart = cart.filter(item => 
-            item.productId !== productId && 
-            item._id !== productId
-        );
+        // 2. Получаем текущую корзину (правильно обрабатываем null)
+        const cartKey = `cart_${userId}`;
+        const cartData = localStorage.getItem(cartKey);
+        const cart = cartData ? JSON.parse(cartData) : [];
         
-        // 3. Сохраняем обратно в localStorage
-        localStorage.setItem(`cart_${localStorage.getItem('userId')}`, JSON.stringify(newCart));
+        console.log('📦 Корзина до удаления:', cart);
+        console.log('🎯 Удаляем productId:', productId);
+        
+        // 3. Фильтруем массив, убирая товар
+        const newCart = cart.filter(item => {
+            const matches = item.productId === productId || item._id === productId;
+            console.log(`🔍 Товар ${item.productId || item._id}: ${matches ? 'УДАЛЯЕМ' : 'ОСТАВЛЯЕМ'}`);
+            return !matches;
+        });
+        
+        console.log('📦 Корзина после удаления:', newCart);
+        
+        // 4. Сохраняем обратно в localStorage
+        localStorage.setItem(cartKey, JSON.stringify(newCart));
 
-        const total = newCart.reduce((sum, item) => sum + (item.qty || 1), 0);
-        document.getElementById('count').textContent = total;
+        // 5. Обновляем счетчик
+        const total = newCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        const countElement = document.getElementById('count');
+        if (countElement) {
+            countElement.textContent = total;
+        }
         
+        await saveCartToServer(newCart);
+        // 6. Вызываем обновление общей суммы (если такая функция есть)
+        if (typeof updateCartTotal === 'function') {
+            updateCartTotal();
+        }
+        
+        console.log('✅ Товар успешно удален');
         return true;
         
     } catch (error) {
-        console.error('💥 Полная хуйня при удалении:', error);
+        console.error('💥 Ошибка при удалении:', error);
         return false;
     }
 }
@@ -341,7 +409,7 @@ function mergeCarts(localCart, serverItems) {
     productId: serverItem.productId,
     tShirtName: serverItem.name,
     price: serverItem.price,
-    qty: serverItem.quantity,
+    quantity: serverItem.quantity,
     size: serverItem.size,
     color: serverItem.color,
     picturePath: serverItem.picturePath,
@@ -364,14 +432,14 @@ function mergeCarts(localCart, serverItems) {
     } else {
       // 🔥 СОХРАНЯЕМ ЛОКАЛЬНОЕ КОЛИЧЕСТВО, ЕСЛИ ОНО БЫЛО ИЗМЕНЕНО
       const localItem = merged[existingIndex];
-      if (localItem.qty !== serverItem.quantity) {
+      if (localItem.quantity !== serverItem.quantity) {
         console.log('Сохраняем локальное количество для товара:', localItem.tShirtName);
         // Локальное количество остается без изменений
       }
       // Обновляем остальные данные с сервера
       merged[existingIndex] = {
         ...serverItem,
-        qty: localItem.qty, // 🔥 СОХРАНЯЕМ ЛОКАЛЬНОЕ КОЛИЧЕСТВО
+        quantity: localItem.quantity, // 🔥 СОХРАНЯЕМ ЛОКАЛЬНОЕ КОЛИЧЕСТВО
         _id: localItem._id // Сохраняем локальный ID
       };
     }
@@ -397,7 +465,7 @@ export async function saveCartToServer(cart = null) { // ✅ ЗНАЧЕНИЕ П
       productId: item.productId || item._id,
       name: item.tShirtName || 'Неизвестный товар',
       price: item.price || 0,
-      quantity: item.qty || 1,
+      quantity: item.quantity,
       size: item.size,
       color: item.color,
       picturePath: item.picturePath || '',
@@ -452,11 +520,11 @@ export function setupCartEventListeners() {
 
       if (increaseBtn) {
         await updateCartItemQuantity(productId, 
-          (parseInt(card.querySelector('.qty-value').textContent) || 1) + 1
+          (parseInt(card.querySelector('.quantity-value').textContent) || 1) + 1
         );
       } else if (decreaseBtn) {
         await updateCartItemQuantity(productId, 
-          Math.max(1, (parseInt(card.querySelector('.qty-value').textContent) || 1) - 1)
+          Math.max(1, (parseInt(card.querySelector('.quantity-value').textContent) || 1) - 1)
         );
       } else if (removeBtn) {
         if (confirm('Удалить товар из корзины?')) {
@@ -467,18 +535,31 @@ export function setupCartEventListeners() {
   });
 }
 
-export async function syncCartOnAuthChange() {
+
+export async function retryFailedSync() {
   const { userId, token } = getCurrentUser();
   
-  if (token && userId !== "guest") {
+  if (!token || userId === "guest") return;
+
+  const errorKey = `cart_error_${userId}`;
+  const errorData = localStorage.getItem(errorKey);
+  
+  if (errorData) {
     try {
-      await fetchCartFromServer();
+      const { cart, timestamp } = JSON.parse(errorData);
+      console.log('🔄 Попытка повторной синхронизации корзины...');
+      
+      const result = await saveCartToServer(cart);
+      
+      if (result.success) {
+        localStorage.removeItem(errorKey);
+        console.log('✅ Повторная синхронизация успешна');
+      }
     } catch (error) {
-      console.error('Ошибка синхронизации:', error);
+      console.error('❌ Повторная синхронизация не удалась:', error);
     }
   }
 }
-
 export function setupCartButtons() {
   document.addEventListener('click', async (e) => {
     const addButton = e.target.closest('.add-to-cart');
@@ -493,7 +574,7 @@ export function setupCartButtons() {
       size: addButton.dataset.size,
       color: addButton.dataset.color,
       picturePath: addButton.dataset.image,
-      qty: 1
+      quantity: 1
     };
 
     try {
@@ -517,7 +598,7 @@ export function setupBuyButtons() {
             sizes: buyButton.dataset.sizes ? JSON.parse(buyButton.dataset.sizes) : [], // Массив размеров
             color: buyButton.dataset.color,
             picturePath: buyButton.dataset.image,
-            qty: 1
+            quantity: 1
         };
 
         showSizeModal(product);
@@ -533,8 +614,8 @@ document.addEventListener('click', async (e) => {
         if (success) {
 
             card.remove();
-
-            updateCartTotal();
         }
+        updateCartTotal();
     }
 });
+setInterval(retryFailedSync, 30000);

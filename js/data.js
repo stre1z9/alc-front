@@ -307,7 +307,7 @@ document.addEventListener("click", async (e) => {
 
   const product = JSON.parse(card.dataset.product || "{}");
   product._id = product._id || uid();
-  product.qty = product.qty || 1;
+  product.quantity = product.quantity || 1;
 
   e.preventDefault();
 
