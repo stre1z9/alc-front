@@ -94,7 +94,18 @@ async function getAllTShirts() {
 }
 async function getAllOrders() {
     try {
-        const response = await fetch('https://backendalcraft-production.up.railway.app/orders/get');
+        const token = localStorage.getItem('access_token');
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const response = await fetch('https://backendalcraft-production.up.railway.app/orders/get', {
+            headers: headers
+        });
 
         if (!response.ok) {
             throw new Error(`Ошибка сервера: ${response.status}`);
@@ -104,16 +115,16 @@ async function getAllOrders() {
         
         // Проверяем разные возможные форматы ответа
         if (Array.isArray(result)) {
-            return result; // Если ответ уже массив
-        } else if (result.dataa && Array.isArray(result.dataa)) {
-            return result.dataa; // Если данные в поле dataa
+            return result;
         } else if (result.data && Array.isArray(result.data)) {
-            return result.data; // Если данные в поле data
+            return result.data;
         } else if (result.orders && Array.isArray(result.orders)) {
-            return result.orders; // Если данные в поле orders
+            return result.orders;
+        } else if (result.dataa && Array.isArray(result.dataa)) {
+            return result.dataa;
         } else {
             console.warn('Неожиданный формат ответа:', result);
-            return []; // Возвращаем пустой массив
+            return [];
         }
     } catch (error) {
         console.error('Ошибка при получении заказов:', error);
@@ -121,63 +132,195 @@ async function getAllOrders() {
     }
 }
 
-// Функция для отображения заказов
+
+
+// Функция для получения данных пользователя по ID
+async function getUserById(userId) {
+    try {
+        if (!userId || userId === 'Не указан') {
+            return null;
+        }
+
+        const token = localStorage.getItem('access_token');
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const response = await fetch(`https://backendalcraft-production.up.railway.app/users/get/${userId}`, {
+            headers: headers
+        });
+
+        if (!response.ok) {
+            // Если пользователь не найден, возвращаем null
+            if (response.status === 404) {
+                return null;
+            }
+            throw new Error(`Ошибка сервера: ${response.status}`);
+        }
+
+        const userData = await response.json();
+        return userData;
+    } catch (error) {
+        console.error('Ошибка при получении данных пользователя:', error);
+        return null;
+    }
+}
+
+// Функция для форматирования ФИО пользователя
+function formatUserName(userData) {
+    if (!userData) return 'Неизвестный пользователь';
+    
+    const fullName = `${userData.data.surname || ''} ${userData.data.name || ''} ${userData.data.patronymic || ''}`.trim();
+    if (fullName) return fullName;
+    
+    if (userData.email) return userData.email;
+    if (userData.phone) return userData.phone;
+    
+
+}
+
+// Функция для отображения заказов с данными пользователей
 async function displayOrders() {
     const ordersContainer = document.getElementById('orders');
     
-    // Показываем индикатор загрузки
-    ordersContainer.innerHTML = '<div class="loading">Загрузка заказов...</div>';
-    
     try {
         const orders = await getAllOrders();
-        
-        // Добавляем дополнительную проверку
-        if (!Array.isArray(orders)) {
-            console.warn('Orders is not an array:', orders);
-            ordersContainer.innerHTML = `
-                <div class="error">
-                    <h3>Ошибка формата данных</h3>
-                    <p>Полученные данные не являются массивом</p>
-                    <pre>${JSON.stringify(orders, null, 2)}</pre>
-                    <button onclick="displayOrders()">Попробовать снова</button>
-                </div>
-            `;
-            return;
-        }
         
         if (orders.length === 0) {
             ordersContainer.innerHTML = '<div class="no-orders">Заказов не найдено</div>';
             return;
         }
         
-        // Создаем HTML для отображения заказов
+        // Создаем массив промисов для получения данных пользователей
+        const userPromises = orders.map(order => 
+            getUserById(order.userId).catch(() => null)
+        );
+        
+        // Ждем завершения всех запросов
+        const usersData = await Promise.all(userPromises);
+        
         const ordersHTML = `
             <div class="orders-header">
-                <h2>Список заказов</h2>
-                <p>Всего заказов: ${orders.length}</p>
+                <h1>Управление заказами</h1>
+                <p class="orders-count">Найдено заказов: <span>${orders.length}</span></p>
             </div>
-            <div class="orders-list">
-                ${orders.map(order => `
-                    <div class="order-card">
-                        <h3>Заказ ${order.id || order._id || 'N/A'}</h3>
-                        <div class="order-details">
-                            <p><strong>Статус:</strong> ${order.status || 'Не указан'}</p>
-                            <p><strong>Дата:</strong> ${order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'Не указана'}</p>
-                            <p><strong>Сумма:</strong> ${order.totalAmount ? `${order.totalAmount} руб.` : 'Не указана'}</p>
-                            <p><strong>Клиент:</strong> ${order.customerName || order.userId || order.email || 'Не указан'}</p>
-                        </div>
-                        ${order.items && Array.isArray(order.items) ? `
-                            <div class="order-items">
-                                <strong>Товары:</strong>
-                                <ul>
-                                    ${order.items.map(item => `
-                                        <li>${item.name || item.title || 'Товар'} - ${item.quantity || 0} шт. × ${item.price || 0} руб.</li>
-                                    `).join('')}
-                                </ul>
+            <div class="orders-grid">
+                ${orders.map((order, index) => {
+                    const userData = usersData[index];
+                    const userName = formatUserName(userData);
+                    
+                    return `
+                    <div class="order-card-admin">
+                        <div class="order-header">
+                            <div class="order-info">
+                                <h3>Заказ #${order.id || order._id || 'N/A'}</h3>
+                                <span class="order-stage ${getStageClass(order.stage)}">
+                                    ${getStageText(order.stage)}
+                                </span>
+                                <span class="order-address">
+                                    ${order.address}
+                                </span>
                             </div>
-                        ` : ''}
+                            <div class="order-date">
+                                ${order.created_at ? new Date(order.created_at).toLocaleDateString('ru-RU') : 
+                                  order.createdAt ? new Date(order.createdAt).toLocaleDateString('ru-RU') : 
+                                  'Дата не указана'}
+                            </div>
+                        </div>
+                        <div class="lol">
+                            <div class="order-details-grid">
+                                <div class="order-detail">
+                                    <span class="detail-label">Клиент:</span>
+                                    <span class="detail-value">${userName}</span>
+                                </div>
+                                <div class="order-detail">
+                                    <span class="detail-label">Сумма:</span>
+                                    <span class="detail-value price">${formatPrice(order.totalAmount || 0)}</span>
+                                </div>
+                                <div class="order-detail">
+                                    <span class="detail-label">Товаров:</span>
+                                    <span class="detail-value">${order.totalCount || 0} шт.</span>
+                                </div>
+                                <div class="order-detail">
+                                    <span class="detail-label">ID заказа:</span>
+                                    <span class="detail-value">${order._id || order.id || 'N/A'}</span>
+                                </div>
+                            </div>
+
+                            ${order.items && Array.isArray(order.items) && order.items.length > 0 ? `
+                                <div class="order-items-section">
+                                    <h4>Товары (${order.items.length}):</h4>
+                                    <div class="order-items-list">
+                                        ${order.items.map(item => `
+                                            <div class="order-item">
+                                                <img src="${item.picturePath || item.image || '/placeholder.jpg'}" 
+                                                    alt="${item.name || 'Товар'}" 
+                                                    class="item-image">
+                                                <div class="item-info">
+                                                    <div class="item-name">${item.name || item.tShirtName || 'Неизвестный товар'}</div>
+                                                    <div class="item-details">
+                                                        <span>Размер ${item.size || ''}</span>
+                                                        <span>Цвет ${item.color || ''}</span>
+                                                        <span>Количество ${item.quantity || 1} шт.</span>
+                                                    </div>
+                                                </div>
+                                                <div class="item-price">${Math.round((item.price || 0) * (1 - item.discount/100))} ₽</div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+
+                        
+
+                        <div class="stage-actions">
+                            <h4>Изменить стадию:</h4>
+                            <div class="stage-buttons">
+                                <button class="btn btn-stage btn-new" onclick="updateOrderStage('${order._id || order.id}', 'new')"
+                                    ${order.stage === 'new' ? 'disabled' : ''}>
+                                    Новый
+                                </button>
+                                <button class="btn btn-stage btn-processing" onclick="updateOrderStage('${order._id || order.id}', 'processing')"
+                                    ${order.stage === 'processing' ? 'disabled' : ''}>
+                                    В обработке
+                                </button>
+                                <button class="btn btn-stage btn-confirmed" onclick="updateOrderStage('${order._id || order.id}', 'confirmed')"
+                                    ${order.stage === 'confirmed' ? 'disabled' : ''}>
+                                    Подтвержден
+                                </button>
+                                <button class="btn btn-stage btn-shipped" onclick="updateOrderStage('${order._id || order.id}', 'shipped')"
+                                    ${order.stage === 'shipped' ? 'disabled' : ''}>
+                                    Отправлен
+                                </button>
+                                <button class="btn btn-stage btn-delivered" onclick="updateOrderStage('${order._id || order.id}', 'delivered')"
+                                    ${order.stage === 'delivered' ? 'disabled' : ''}>
+                                    Доставлен
+                                </button>
+                                <button class="btn btn-stage btn-completed" onclick="updateOrderStage('${order._id || order.id}', 'completed')"
+                                    ${order.stage === 'completed' ? 'disabled' : ''}>
+                                    Завершен
+                                </button>
+                                <button class="btn btn-stage btn-cancelled" onclick="updateOrderStage('${order._id || order.id}', 'cancelled')"
+                                    ${order.stage === 'cancelled' ? 'disabled' : ''}>
+                                    Отменен
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="order-meta">
+                            <small>Создан: ${order.created_at ? new Date(order.created_at).toLocaleString('ru-RU') : 
+                                  order.createdAt ? new Date(order.createdAt).toLocaleString('ru-RU') : 
+                                  'Не указано'}</small>
+                            ${userData ? `<small>ID пользователя: ${order.userId}</small>` : ''}
+                        </div>
                     </div>
-                `).join('')}
+                `}).join('')}
             </div>
         `;
         
@@ -192,6 +335,113 @@ async function displayOrders() {
             </div>
         `;
     }
+}
+
+// Обновляем функцию updateOrderStage для использования данных пользователя
+async function updateOrderStage(orderId, newStage) {
+    try {
+        const token = localStorage.getItem('access_token');
+        if (!token) {
+            throw new Error('Токен авторизации не найден');
+        }
+
+        // Получаем текущие данные заказа
+        const orders = await getAllOrders();
+        const order = orders.find(o => o._id === orderId || o.id === orderId);
+        
+        if (!order) {
+            throw new Error('Заказ не найден');
+        }
+
+        // Получаем данные пользователя для отправки
+        const userData = await getUserById(order.userId);
+        
+        // Подготавливаем данные в нужном формате
+        const updateData = {
+            userId: order.userId || '',
+            items: order.items || [],
+            totalCount: order.totalCount?.toString() || '0',
+            totalAmount: order.totalAmount?.toString() || '0',
+            stage: newStage,
+            created_at: order.createdAt ? new Date(order.createdAt) : new Date(),
+            // Добавляем данные пользователя, если они есть
+            userData: userData ? {
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email,
+                phone: userData.phone
+            } : null
+        };
+
+        const response = await fetch('https://backendalcraft-production.up.railway.app/orders/update-stage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                
+            },
+            body: JSON.stringify(updateData)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Ошибка сервера: ${response.status} - ${errorText}`);
+        }
+
+        const result = await response.json();
+        console.log('✅ Стадия заказа обновлена:', result);
+        
+        showNotification(`Стадия заказа изменена на "${getStageText(newStage)}"`, 'success');
+        
+        // Обновляем отображение заказов
+        displayOrders();
+        
+        return result;
+        
+    } catch (error) {
+        console.error('❌ Ошибка обновления стадии заказа:', error);
+        showNotification(`Ошибка обновления стадии: ${error.message}`, 'error');
+        throw error;
+    }
+}
+
+// Вызываем функцию при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('orders')) {
+        displayOrders();
+    }
+});
+
+// Вспомогательные функции
+function formatPrice(price) {
+    return new Intl.NumberFormat('ru-RU').format(Math.round(price)) + ' ₽';
+}
+
+// Вспомогательная функция для получения текста стадии
+function getStageText(stage) {
+    const stageTexts = {
+        'new': 'Новый',
+        'processing': 'В обработке',
+        'confirmed': 'Подтвержден',
+        'shipped': 'Отправлен',
+        'delivered': 'Доставлен',
+        'cancelled': 'Отменен',
+        'completed': 'Завершен'
+    };
+    return stageTexts[stage] || stage;
+}
+
+// Функция для получения класса CSS для стадии
+function getStageClass(stage) {
+    const stageClasses = {
+        'new': 'stage-new',
+        'processing': 'stage-processing',
+        'confirmed': 'stage-confirmed',
+        'shipped': 'stage-shipped',
+        'delivered': 'stage-delivered',
+        'cancelled': 'stage-cancelled',
+        'completed': 'stage-completed'
+    };
+    return stageClasses[stage] || 'stage-unknown';
 }
 
 // Функция для отладки - посмотреть raw данные
@@ -271,7 +521,12 @@ function validateTShirtData(data) {
 
     return errors;
 }
+let lastId = 0;
 
+function generateTShirtId() {
+    lastId++;
+    return `TS${String(lastId).padStart(6, '0')}`;
+}
 // Функция для создания объекта товара
 function createTShirtObject(formData) {
     return {
@@ -291,10 +546,6 @@ function createTShirtObject(formData) {
     };
 }
 
-// Генерация уникального ID для товара
-function generateTShirtId() {
-    return 'TS_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-}
 
 // Пример использования
 async function handleTShirtSubmit(event) {
