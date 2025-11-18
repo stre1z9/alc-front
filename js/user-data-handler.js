@@ -49,7 +49,7 @@ export function setupUserDataHandlers(authManager) {
 
         try {
             const userId = localStorage.getItem('userId');
-            const response = await fetch(`http://localhost:3000/users/update/${userId}`, {
+            const response = await fetch(`https://backendalcraft-production.up.railway.app//users/update/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -90,4 +90,5 @@ export function setupUserDataHandlers(authManager) {
         editBtn.addEventListener("click", editData);
         saveBtn.addEventListener("click", saveData);
     }
+
 }
