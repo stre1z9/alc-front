@@ -1,6 +1,6 @@
 export class AuthService {
     constructor() {
-        this.baseUrl = 'http://localhost:3000';
+        this.baseUrl = 'backendalcraft-production.up.railway.app';
     }
 
     async registerUser(email, clientHash) {
@@ -112,4 +112,5 @@ export class AuthService {
         localStorage.removeItem('userId');
         localStorage.removeItem('userEmail');
     }
+
 }
