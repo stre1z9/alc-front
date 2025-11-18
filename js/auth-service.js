@@ -1,6 +1,6 @@
 export class AuthService {
     constructor() {
-        this.baseUrl = 'backendalcraft-production.up.railway.app';
+        this.baseUrl = 'https://backendalcraft-production.up.railway.app';
     }
 
     async registerUser(email, clientHash) {
@@ -114,3 +114,4 @@ export class AuthService {
     }
 
 }
+
