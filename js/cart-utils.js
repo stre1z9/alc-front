@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:3000";
+const API_URL = "https://backendalcraft-production.up.railway.app";
 
 export function getCurrentUser() {
   return {
@@ -117,3 +117,4 @@ export async function saveCartToServer(cart) {
     console.error("Не удалось сохранить корзину на сервер:", err);
   }
 }
+
